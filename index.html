@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>🍗 Lusungulo Fresh Broilers - Premium Quality Chicken</title>
+
+  <!-- App / PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f5b400">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Icons & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo-container">
+          <div class="logo-circle">
+            <i class="fas fa-crown"></i>
+            <i class="fas fa-drumstick-bite"></i>
+          </div>
+          <div class="header-text">
+            <h1 class="brand-name">LUSUNGULO FRESH BROILERS</h1>
+            <div class="tagline-container">
+              <span class="tagline-tag premium-tag">PREMIUM QUALITY</span>
+              <span class="tagline-tag fresh-tag">100% FRESH</span>
+              <span class="tagline-tag delivery-tag">FREE DELIVERY</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-promo">
+          <p class="promo-text">
+            <i class="fas fa-tag"></i>
+            <strong>Today's Special:</strong> Order 10+ birds get 10% discount!
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- TRUST -->
+    <section class="trust-section">
+      <div class="trust-items">
+        <div class="trust-item"><i class="fas fa-shield-alt"></i><span>Quality Guaranteed</span></div>
+        <div class="trust-item"><i class="fas fa-truck-fast"></i><span>Same Day Delivery</span></div>
+        <div class="trust-item"><i class="fas fa-clock"></i><span>Always Fresh</span></div>
+      </div>
+    </section>
+
+    <!-- STOCK -->
+    <section class="stock-section">
+      <h2>🔥 LIVE STOCK</h2>
+      <p>Medium: <span id="stock-medium">10</span></p>
+      <p>Small: <span id="stock-small">15</span></p>
+      <p>Large: <span id="stock-large">3</span></p>
+    </section>
+
+    <!-- ORDER FORM -->
+    <section class="order-form" id="order-form">
+      <h2>🛒 PLACE YOUR ORDER</h2>
+
+      <form id="orderForm">
+        <input type="text" id="customerName" placeholder="Full Name" required>
+        <input type="tel" id="customerPhone" placeholder="+268..." required>
+        <textarea id="customerAddress" placeholder="Delivery Address" required></textarea>
+
+        <select id="deliveryTime" required>
+          <option value="">Select Delivery Time</option>
+          <option>Morning</option>
+          <option>Afternoon</option>
+          <option>Evening</option>
+        </select>
+
+        <button type="submit">SECURE ORDER NOW</button>
+      </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <p>© 2024 Lusungulo Fresh Broilers</p>
+    </footer>
+
+  </div>
+
+  <!-- MAIN SCRIPT -->
+  <script src="script.js"></script>
+
+  <!-- ✅ SERVICE WORKER REGISTRATION (THIS MAKES IT AN APP) -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("service-worker.js")
+          .then(() => console.log("✅ Service Worker Registered"))
+          .catch(err => console.log("Service Worker error:", err));
+      });
+    }
+  </script>
+
+</body>
+</html>
