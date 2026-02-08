@@ -1,111 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>🍗 Lusungulo Fresh Broilers - Premium Quality Chicken</title>
+<meta charset="UTF-8">
+<title>Lusungulo Fresh Broilers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- App / PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#f5b400">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Icons & Fonts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<style>
+body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
+.app{max-width:480px;margin:auto;background:white;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.2);overflow:hidden}
+header{background:#2e7d32;color:white;padding:15px;text-align:center}
+.section{padding:15px}
+input,select{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid #ccc}
+button{padding:12px;margin-top:12px;width:100%;border:none;border-radius:10px;background:#4caf50;color:white;font-size:16px}
+.notice{background:#c8e6c9;padding:10px;border-left:5px solid green;margin:10px 0}
+#receipt,#adminPanel{display:none}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
+.modal-box{background:white;padding:20px;border-radius:10px;text-align:center}
+</style>
 </head>
 
 <body>
-  <div class="app-container">
 
-    <!-- HEADER -->
-    <header class="app-header">
-      <div class="header-content">
-        <div class="logo-container">
-          <div class="logo-circle">
-            <i class="fas fa-crown"></i>
-            <i class="fas fa-drumstick-bite"></i>
-          </div>
-          <div class="header-text">
-            <h1 class="brand-name">LUSUNGULO FRESH BROILERS</h1>
-            <div class="tagline-container">
-              <span class="tagline-tag premium-tag">PREMIUM QUALITY</span>
-              <span class="tagline-tag fresh-tag">100% FRESH</span>
-              <span class="tagline-tag delivery-tag">FREE DELIVERY</span>
-            </div>
-          </div>
-        </div>
-        <div class="header-promo">
-          <p class="promo-text">
-            <i class="fas fa-tag"></i>
-            <strong>Today's Special:</strong> Order 10+ birds get 10% discount!
-          </p>
-        </div>
-      </div>
-    </header>
+<div class="app">
+<header>
+<h2>🐔 Lusungulo Fresh Broilers</h2>
+<p>Premium Quality • Free Delivery</p>
+</header>
 
-    <!-- TRUST -->
-    <section class="trust-section">
-      <div class="trust-items">
-        <div class="trust-item"><i class="fas fa-shield-alt"></i><span>Quality Guaranteed</span></div>
-        <div class="trust-item"><i class="fas fa-truck-fast"></i><span>Same Day Delivery</span></div>
-        <div class="trust-item"><i class="fas fa-clock"></i><span>Always Fresh</span></div>
-      </div>
-    </section>
+<div class="section">
+<div class="notice">
+<b>🔐 Securing Order Fee:</b>  
+E50 refundable deposit required to secure your order.
+</div>
 
-    <!-- STOCK -->
-    <section class="stock-section">
-      <h2>🔥 LIVE STOCK</h2>
-      <p>Medium: <span id="stock-medium">10</span></p>
-      <p>Small: <span id="stock-small">15</span></p>
-      <p>Large: <span id="stock-large">3</span></p>
-    </section>
+<form id="orderForm">
+<input id="name" placeholder="Full Name" required>
+<input id="phone" placeholder="Phone Number" required>
+<input id="idNumber" placeholder="National ID Number" required>
+<input id="address" placeholder="Delivery Address" required>
 
-    <!-- ORDER FORM -->
-    <section class="order-form" id="order-form">
-      <h2>🛒 PLACE YOUR ORDER</h2>
+<select id="size" required>
+<option value="">Select Size</option>
+<option>Small</option>
+<option>Medium</option>
+<option>Large</option>
+</select>
 
-      <form id="orderForm">
-        <input type="text" id="customerName" placeholder="Full Name" required>
-        <input type="tel" id="customerPhone" placeholder="+268..." required>
-        <textarea id="customerAddress" placeholder="Delivery Address" required></textarea>
+<input type="number" id="qty" placeholder="Quantity" min="1" required>
 
-        <select id="deliveryTime" required>
-          <option value="">Select Delivery Time</option>
-          <option>Morning</option>
-          <option>Afternoon</option>
-          <option>Evening</option>
-        </select>
+<select id="time" required>
+<option value="">Delivery Time</option>
+<option>Morning</option>
+<option>Afternoon</option>
+<option>Evening</option>
+</select>
 
-        <button type="submit">SECURE ORDER NOW</button>
-      </form>
-    </section>
+<h4>💳 Deposit Payment</h4>
+<input type="date" id="payDate" required>
+<input type="time" id="payTime" required>
+<input id="momoID" placeholder="MoMo Transaction ID" required>
 
-    <!-- FOOTER -->
-    <footer class="app-footer">
-      <p>© 2024 Lusungulo Fresh Broilers</p>
-    </footer>
+<button type="submit">SECURE ORDER</button>
+</form>
 
-  </div>
+<button onclick="showAdmin()">ADMIN PANEL</button>
+</div>
 
-  <!-- MAIN SCRIPT -->
-  <script src="script.js"></script>
+<!-- RECEIPT -->
+<div id="receipt" class="section">
+<h3>🧾 RECEIPT</h3>
+<p id="rName"></p>
+<p id="rPhone"></p>
+<p id="rOrder"></p>
+<p id="rDeposit"></p>
+<p id="rTxn"></p>
+<button onclick="window.print()">🖨 Print</button>
+</div>
 
-  <!-- ✅ SERVICE WORKER REGISTRATION (THIS MAKES IT AN APP) -->
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("service-worker.js")
-          .then(() => console.log("✅ Service Worker Registered"))
-          .catch(err => console.log("Service Worker error:", err));
-      });
-    }
-  </script>
+<!-- ADMIN -->
+<div id="adminPanel" class="section">
+<h3>📊 ADMIN PANEL</h3>
+<div id="ordersList"></div>
+<button onclick="hideAdmin()">Close Admin</button>
+</div>
+
+</div>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<h3>✅ Order Sent</h3>
+<p>We will call you shortly.</p>
+<button onclick="closeModal()">OK</button>
+</div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+// 🔴 PUT YOUR FIREBASE KEYS HERE
+var firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+projectId: "YOUR_PROJECT"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+
+const form=document.getElementById("orderForm");
+const modal=document.getElementById("modal");
+const receipt=document.getElementById("receipt");
+const adminPanel=document.getElementById("adminPanel");
+const ordersList=document.getElementById("ordersList");
+
+form.addEventListener("submit",function(e){
+e.preventDefault();
+
+let name=name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let idNumber=document.getElementById("idNumber").value;
+let address=document.getElementById("address").value;
+let size=document.getElementById("size").value;
+let qty=document.getElementById("qty").value;
+let time=document.getElementById("time").value;
+let payDate=document.getElementById("payDate").value;
+let payTime=document.getElementById("payTime").value;
+let momoID=document.getElementById("momoID").value;
+
+let order={
+name,phone,idNumber,address,size,qty,time,payDate,payTime,momoID
+};
+
+db.ref("orders").push(order);
+
+// WhatsApp
+let msg=`🐔 NEW ORDER
+Name: ${name}
+Phone: ${phone}
+ID: ${idNumber}
+Address: ${address}
+Size: ${size}
+Qty: ${qty}
+Delivery: ${time}
+
+Deposit: E50
+Date: ${payDate}
+Time: ${payTime}
+MoMo Txn: ${momoID}`;
+
+let whatsapp="26876123456"; // 👈 CHANGE
+window.open("https://wa.me/"+whatsapp+"?text="+encodeURIComponent(msg),"_blank");
+
+// Receipt
+document.getElementById("rName").innerText="Name: "+name;
+document.getElementById("rPhone").innerText="Phone: "+phone;
+document.getElementById("rOrder").innerText=`Order: ${size} x ${qty}`;
+document.getElementById("rDeposit").innerText="Deposit: E50 (Refundable)";
+document.getElementById("rTxn").innerText="MoMo Txn: "+momoID;
+receipt.style.display="block";
+
+modal.style.display="flex";
+form.reset();
+});
+
+function closeModal(){modal.style.display="none";}
+
+function showAdmin(){
+adminPanel.style.display="block";
+db.ref("orders").on("value",snap=>{
+let html="";
+snap.forEach(s=>{
+let o=s.val();
+html+=`<p>📦 ${o.name} - ${o.qty} (${o.size})</p>`;
+});
+ordersList.innerHTML=html;
+});
+}
+
+function hideAdmin(){
+adminPanel.style.display="none";
+}
+</script>
 
 </body>
 </html>
