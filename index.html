@@ -454,7 +454,7 @@ img.option-img{
 <div id="customerTab" class="tab-content active">
 <div class="section">
 <div class="notice">
-<i class="fa-solid fa-lock"></i> 🔐 E50 refundable deposit required for MoMo payments
+<i class="fa-solid fa-lock"></i> 🔐 E20 refundable deposit required for MoMo payments
 </div>
 
 <form id="orderForm">
@@ -485,8 +485,8 @@ img.option-img{
 <select id="size" required style="display:none;">
 <option value="">Select Size</option>
 <option value="1.5">Small (1.5 kg)</option>
-<option value="2.0">Medium (2 kg)</option>
-<option value="2.5">Large (2.5 kg)</option>
+<option value="2.0">Medium (1.8 kg)</option>
+<option value="2.5">Large (2.0 kg)</option>
 </select>
 
 <h4>📦 Quantity</h4>
@@ -665,8 +665,8 @@ img.option-img{
     <h3>➕ ADD NEW BATCH</h3>
     <select id="stockSize">
       <option value="1.5">Small (1.5kg)</option>
-      <option value="2.0">Medium (2kg)</option>
-      <option value="2.5">Large (2.5kg)</option>
+      <option value="2.0">Medium (1.8kg)</option>
+      <option value="2.5">Large (2.0kg)</option>
     </select>
     <input type="number" id="stockQuantity" placeholder="Quantity to Add" min="1">
     <input type="number" id="stockPrice" placeholder="Price per kg" value="45">
@@ -681,8 +681,8 @@ img.option-img{
     <h3>✏️ ADJUST STOCK</h3>
     <select id="adjustSize">
       <option value="1.5">Small (1.5kg)</option>
-      <option value="2.0">Medium (2kg)</option>
-      <option value="2.5">Large (2.5kg)</option>
+      <option value="2.0">Medium (1.8kg)</option>
+      <option value="2.5">Large (2.0kg)</option>
     </select>
     <div style="display:flex; gap:10px; margin-top:10px;">
       <button onclick="adjustStockFromModal(-1)" class="btn-warning" style="flex:1;">-1</button>
@@ -829,7 +829,7 @@ document.getElementById('installButton').addEventListener('click', async () => {
 });
 
 // ============ ADMIN AUTHENTICATION ============
-const ADMIN_PASSWORD = "admin123"; // Change this to your desired password
+const ADMIN_PASSWORD = "Bonga123"; // Change this to your desired password
 
 function showAdminLogin() {
   document.getElementById('adminLoginModal').style.display = 'flex';
@@ -883,7 +883,7 @@ function logoutAdmin() {
 }
 
 // ============ GLOBAL VARIABLES ============
-const YOUR_WHATSAPP_NUMBER = "26876123456"; // 🔴 REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
+const YOUR_WHATSAPP_NUMBER = "886979562036"; // 🔴 REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
 let currentRatingOrderId = null;
 
 // ============ TAB SWITCHING ============
@@ -943,8 +943,8 @@ function initializeStock() {
         if (!snap.exists()) {
             const defaultStock = {
                 "1.5": { weight: 1.5, quantity: 50, pricePerKg: 45, lastUpdated: new Date().toISOString() },
-                "2.0": { weight: 2.0, quantity: 35, pricePerKg: 45, lastUpdated: new Date().toISOString() },
-                "2.5": { weight: 2.5, quantity: 20, pricePerKg: 45, lastUpdated: new Date().toISOString() }
+                "1.8": { weight: 1.8, quantity: 35, pricePerKg: 45, lastUpdated: new Date().toISOString() },
+                "2.0": { weight: 2.0, quantity: 20, pricePerKg: 45, lastUpdated: new Date().toISOString() }
             };
             db.ref("stock").set(defaultStock);
         }
@@ -993,7 +993,7 @@ displayStock();
 // CUSTOMER SIZE CARDS - ONLY SHOWS AVAILABILITY
 function updateSizeCards(stock) {
     let html = '';
-    ['1.5', '2.0', '2.5'].forEach(weight => {
+    ['1.5', '1.8', '2.0'].forEach(weight => {
         const item = stock[weight] || { quantity: 0, pricePerKg: 45 };
         const disabled = item.quantity <= 0 ? 'style="opacity:0.5; pointer-events:none;"' : '';
         const price = (weight * (item.pricePerKg || 45)).toFixed(2);
@@ -1022,7 +1022,7 @@ function loadStockManagement() {
         const stock = snap.val() || {};
         let html = '';
         
-        ['1.5', '2.0', '2.5'].forEach(weight => {
+        ['1.5', '1.8', '2.0'].forEach(weight => {
             const item = stock[weight] || { quantity: 0, pricePerKg: 45 };
             html += `<div class="stock-item">
                         <div>
