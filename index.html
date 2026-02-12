@@ -5,60 +5,238 @@
 <title>Lusungulo Fresh Broilers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
-body{font-family:Arial;background:#e8f5e9;margin:0;padding:10px}
-.app{max-width:480px;margin:auto;background:white;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.2);overflow:hidden}
-header{background:#2e7d32;color:white;padding:15px;text-align:center}
-.section{padding:15px}
-input,select{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid #ccc}
-button{padding:12px;margin-top:12px;width:100%;border:none;border-radius:10px;background:#4caf50;color:white;font-size:16px}
-.notice{background:#c8e6c9;padding:10px;border-left:5px solid green;margin:10px 0}
-#receipt,#adminPanel{display:none}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
-.modal-box{background:white;padding:20px;border-radius:10px;text-align:center}
+body{
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#f5f5f5 0%,#e8f5e9 100%);
+  margin:0;
+  padding:10px;
+  color:#333;
+}
+.app{
+  max-width:550px;
+  margin:auto;
+  background:white;
+  border-radius:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,.2);
+  overflow:hidden;
+  padding-bottom:20px;
+}
+header{
+  background:#2e7d32;
+  color:white;
+  padding:15px;
+  text-align:center;
+}
+header h2{margin-bottom:5px;}
+header p{font-size:14px;}
+.special-deal {
+  background: linear-gradient(45deg,#ff9a9e,#fad0c4);
+  color:white;
+  padding:12px;
+  text-align:center;
+  border-radius:12px;
+  font-weight:bold;
+  margin:10px 15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+}
+.section{padding:15px;}
+input,select{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:16px;
+  box-sizing: border-box;
+}
+button{
+  padding:12px;
+  margin-top:12px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  background:#4caf50;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{background:#388e3c;}
+.notice{
+  background:#c8e6c9;
+  padding:10px;
+  border-left:5px solid green;
+  margin:10px 0;
+  font-size:14px;
+}
+#receipt,#adminPanel{display:none;}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-box{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+}
+img.option-img{
+  width:100%;
+  border-radius:10px;
+  margin-top:10px;
+}
+.price-box{
+  background:#fff3e0;
+  padding:10px;
+  margin-top:10px;
+  border-left:5px solid #fb8c00;
+  font-weight:bold;
+  text-align:center;
+  font-size:18px;
+  transition: transform 0.2s;
+}
+.menu-card{
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  margin-bottom:15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align:center;
+  background:white;
+  cursor:pointer;
+}
+.menu-card img{width:100%;height:200px;object-fit:cover;}
+.menu-card:hover{
+  transform:scale(1.03);
+  box-shadow:0 15px 30px rgba(0,0,0,.3);
+}
+.menu-card h4{color:#2e7d32;margin:10px 0;}
+.menu-card p{font-weight:bold;color:#fb8c00;font-size:18px;}
+.icon-input{
+  display:flex;
+  align-items:center;
+  margin-top:8px;
+}
+.icon-input i{
+  margin-right:8px;
+  color:#2e7d32;
+  min-width:20px;
+}
+.icon-input input {
+  flex: 1;
+}
+#qty {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
 </style>
 </head>
-
 <body>
 
 <div class="app">
 <header>
 <h2>🐔 Lusungulo Fresh Broilers</h2>
-<p>Premium Quality • Free Delivery</p>
+<p>Fresh, Delicious & Ready for You!</p>
 </header>
+
+<div class="special-deal">🎉 SPECIAL DEAL: Buy 2 Medium Chickens, Get 1 Small FREE! 🎉</div>
 
 <div class="section">
 <div class="notice">
-<b>🔐 Securing Order Fee:</b>  
-E50 refundable deposit required to secure your order.
+<i class="fa-solid fa-lock"></i> 🔐 Securing Order Fee: E50 refundable deposit required
 </div>
 
 <form id="orderForm">
-<input id="name" placeholder="Full Name" required>
-<input id="phone" placeholder="Phone Number" required>
-<input id="idNumber" placeholder="National ID Number" required>
-<input id="address" placeholder="Delivery Address" required>
 
-<select id="size" required>
+<div class="icon-input">
+  <i class="fa-solid fa-user"></i>
+  <input id="name" placeholder="Full Name" required>
+</div>
+<div class="icon-input">
+  <i class="fa-solid fa-phone"></i>
+  <input id="phone" placeholder="Phone Number" required>
+</div>
+<div class="icon-input">
+  <i class="fa-solid fa-id-card"></i>
+  <input id="idNumber" placeholder="National ID Number" required>
+</div>
+<div class="icon-input">
+  <i class="fa-solid fa-house"></i>
+  <input id="address" placeholder="Delivery Address" required>
+</div>
+
+<h4>🐔 Select Size</h4>
+<div class="menu-card" onclick="document.getElementById('size').value='1.5';updatePrice();">
+  <img src="https://images.unsplash.com/photo-1604908177524-9f409a8b3d95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" alt="Small Chicken">
+  <h4>Small Chicken - 1.5kg</h4>
+  <p>Price: E67.5</p>
+</div>
+<div class="menu-card" onclick="document.getElementById('size').value='2.0';updatePrice();">
+  <img src="https://images.unsplash.com/photo-1601050692362-9f90f13ee824?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" alt="Medium Chicken">
+  <h4>Medium Chicken - 2kg</h4>
+  <p>Price: E90</p>
+</div>
+<div class="menu-card" onclick="document.getElementById('size').value='2.5';updatePrice();">
+  <img src="https://images.unsplash.com/photo-1604908177524-9f409a8b3d95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" alt="Large Chicken">
+  <h4>Large Chicken - 2.5kg</h4>
+  <p>Price: E112.5</p>
+</div>
+
+<select id="size" required style="display:none;">
 <option value="">Select Size</option>
-<option>Small</option>
-<option>Medium</option>
-<option>Large</option>
+<option value="1.5">Small (1.5 kg)</option>
+<option value="2.0">Medium (2 kg)</option>
+<option value="2.5">Large (2.5 kg)</option>
 </select>
 
-<input type="number" id="qty" placeholder="Quantity" min="1" required>
+<h4>📦 Quantity</h4>
+<input type="number" id="qty" placeholder="Quantity" value="1" min="1" required>
 
-<select id="time" required>
-<option value="">Delivery Time</option>
-<option>Morning</option>
-<option>Afternoon</option>
-<option>Evening</option>
+<h4>🍗 Select Type</h4>
+<select id="type" required>
+<option value="">Select Type</option>
+<option value="full">Full Chicken</option>
+<option value="cut">Cut Pieces</option>
 </select>
+
+<img id="fullImg" class="option-img" src="https://images.unsplash.com/photo-1604908177524-9f409a8b3d95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" style="display:none;" alt="Full Chicken">
+<img id="cutImg" class="option-img" src="https://images.unsplash.com/photo-1601050692362-9f90f13ee824?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" style="display:none;" alt="Cut Pieces">
+
+<div id="services" style="display:none;">
+<h4>🍴 Select Service (Full Chicken Only)</h4>
+<select id="service">
+<option value="">No Service</option>
+<option value="5">Ready to Cook + E5</option>
+<option value="10">Curry Cut + E10</option>
+</select>
+<img id="serviceImg" class="option-img" style="display:none;" alt="Service Image">
+</div>
 
 <h4>💳 Deposit Payment</h4>
-<input type="date" id="payDate" required>
-<input type="time" id="payTime" required>
-<input id="momoID" placeholder="MoMo Transaction ID" required>
+<div class="icon-input"><i class="fa-solid fa-calendar"></i><input type="date" id="payDate" required></div>
+<div class="icon-input"><i class="fa-solid fa-clock"></i><input type="time" id="payTime" required></div>
+<div class="icon-input"><i class="fa-brands fa-facebook-messenger"></i><input id="momoID" placeholder="MoMo Transaction ID" required></div>
+
+<div class="price-box">Total Price: <span id="totalPrice">0</span> E</div>
 
 <button type="submit">SECURE ORDER</button>
 </form>
@@ -73,6 +251,7 @@ E50 refundable deposit required to secure your order.
 <p id="rPhone"></p>
 <p id="rOrder"></p>
 <p id="rDeposit"></p>
+<p id="rTotal"></p>
 <p id="rTxn"></p>
 <button onclick="window.print()">🖨 Print</button>
 </div>
@@ -86,103 +265,206 @@ E50 refundable deposit required to secure your order.
 
 </div>
 
-<div class="modal" id="modal">
-<div class="modal-box">
-<h3>✅ Order Sent</h3>
-<p>We will call you shortly.</p>
-<button onclick="closeModal()">OK</button>
-</div>
-</div>
-
-<!-- FIREBASE -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
-// 🔴 PUT YOUR FIREBASE KEYS HERE
+// 🔥🔥🔥 YOUR ACTUAL FIREBASE CONFIGURATION - CONNECTED TO YOUR PROJECT 🔥🔥🔥
 var firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_PROJECT.firebaseapp.com",
-databaseURL: "https://YOUR_PROJECT.firebaseio.com",
-projectId: "YOUR_PROJECT"
+  apiKey: "AIzaSyCXJeodZbNeGyLfJgQrqYriJVdgi-GOA1o",
+  authDomain: "lusungulo-3a422.firebaseapp.com",
+  databaseURL: "https://lusungulo-3a422-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "lusungulo-3a422",
+  storageBucket: "lusungulo-3a422.firebasestorage.app",
+  messagingSenderId: "644814725574",
+  appId: "1:644814725574:web:cfbaa03a1ee7ba7e1e7ac7",
+  measurementId: "G-E25HW7HNZ6"
 };
+
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.database();
 
+// Elements
 const form=document.getElementById("orderForm");
-const modal=document.getElementById("modal");
 const receipt=document.getElementById("receipt");
 const adminPanel=document.getElementById("adminPanel");
 const ordersList=document.getElementById("ordersList");
+const sizeSelect=document.getElementById("size");
+const qtyInput=document.getElementById("qty");
+const typeSelect=document.getElementById("type");
+const serviceSelect=document.getElementById("service");
+const totalBox=document.getElementById("totalPrice");
+const fullImg=document.getElementById("fullImg");
+const cutImg=document.getElementById("cutImg");
+const servicesDiv=document.getElementById("services");
 
+// Pricing
+const pricePerKg=45;
+
+// Update price
+function updatePrice(){
+  let weight=parseFloat(sizeSelect.value)||0;
+  let qty=parseInt(qtyInput.value)||1;
+  let service=parseInt(serviceSelect.value)||0;
+  let total=weight*pricePerKg*qty + service*qty;
+  totalBox.style.transform="scale(1.2)";
+  setTimeout(()=>totalBox.style.transform="scale(1)",200);
+  totalBox.innerText=total;
+  return total;
+}
+
+// Show images/services
+typeSelect.addEventListener("change",()=>{
+  if(typeSelect.value==="full"){
+    fullImg.style.display="block";
+    cutImg.style.display="none";
+    servicesDiv.style.display="block";
+  }else if(typeSelect.value==="cut"){
+    fullImg.style.display="none";
+    cutImg.style.display="block";
+    servicesDiv.style.display="none";
+    serviceSelect.value="";
+  }else{
+    fullImg.style.display="none";
+    cutImg.style.display="none";
+    servicesDiv.style.display="none";
+    serviceSelect.value="";
+  }
+  updatePrice();
+});
+
+sizeSelect.addEventListener("change",updatePrice);
+qtyInput.addEventListener("input",updatePrice);
+serviceSelect.addEventListener("change",()=>{
+  updatePrice();
+  const serviceImg=document.getElementById("serviceImg");
+  if(serviceSelect.value=="5"){ 
+      serviceImg.src="https://images.unsplash.com/photo-1617196037536-6c60bcf9c6b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400"; 
+      serviceImg.style.display="block"; 
+  } 
+  else if(serviceSelect.value=="10"){ 
+      serviceImg.src="https://images.unsplash.com/photo-1601050692362-9f90f13ee824?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400"; 
+      serviceImg.style.display="block"; 
+  } 
+  else { serviceImg.style.display="none"; }
+});
+
+// Firebase listener for admin (live updates)
+db.ref("orders").on("value", snap => {
+    let html = "";
+    if (!snap.exists()) {
+        html = "<p>No orders yet</p>";
+    } else {
+        snap.forEach(s => {
+            let o = s.val();
+            html += `<div style="border-bottom:1px solid #ddd; padding:10px;">
+                        <strong>📦 ${o.name}</strong><br>
+                        📞 ${o.phone}<br>
+                        🍗 ${o.type==="full"?"Full Chicken":"Cut Pieces"} x ${o.qty || 1}<br>
+                        💰 Total: E${o.total}<br>
+                        💳 MoMo: ${o.momoID}<br>
+                        <small>${o.payDate} ${o.payTime}</small>
+                    </div>`;
+        });
+    }
+    ordersList.innerHTML = html;
+});
+
+// Form submit
 form.addEventListener("submit",function(e){
-e.preventDefault();
+  e.preventDefault();
+  let name=document.getElementById("name").value;
+  let phone=document.getElementById("phone").value;
+  let idNumber=document.getElementById("idNumber").value;
+  let address=document.getElementById("address").value;
+  let size=sizeSelect.value;
+  let qty=qtyInput.value||1;
+  let type=typeSelect.value;
+  let service=serviceSelect.value || 0;
+  let payDate=document.getElementById("payDate").value;
+  let payTime=document.getElementById("payTime").value;
+  let momoID=document.getElementById("momoID").value;
+  let total=updatePrice();
+  
+  // Validate size selected
+  if (!size) {
+      Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please select a chicken size!'
+      });
+      return;
+  }
+  
+  let order={name,phone,idNumber,address,size,qty,type,service,payDate,payTime,momoID,total, timestamp: new Date().toISOString()};
 
-let name=name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let idNumber=document.getElementById("idNumber").value;
-let address=document.getElementById("address").value;
-let size=document.getElementById("size").value;
-let qty=document.getElementById("qty").value;
-let time=document.getElementById("time").value;
-let payDate=document.getElementById("payDate").value;
-let payTime=document.getElementById("payTime").value;
-let momoID=document.getElementById("momoID").value;
+  db.ref("orders").push(order, function(error){
+      if(error){
+          Swal.fire({
+              icon:'error',
+              title:'Oops...',
+              text:'Order not saved, try again! Error: ' + error.message
+          });
+          console.error(error);
+      } else {
+          Swal.fire({
+              icon:'success',
+              title:'Order Secured!',
+              text:'We will call you shortly.'
+          });
+          form.reset();
+          // Reset quantity to 1
+          document.getElementById("qty").value = 1;
+          updatePrice();
+          fullImg.style.display="none";
+          cutImg.style.display="none";
+          servicesDiv.style.display="none";
 
-let order={
-name,phone,idNumber,address,size,qty,time,payDate,payTime,momoID
-};
+          // Receipt
+          document.getElementById("rName").innerText="Name: "+name;
+          document.getElementById("rPhone").innerText="Phone: "+phone;
+          document.getElementById("rOrder").innerText=`Order: ${type==="full"?"Full Chicken":"Cut Pieces"} x ${qty}`;
+          document.getElementById("rDeposit").innerText="Deposit: E50 (Refundable)";
+          document.getElementById("rTotal").innerText="Total Price: E"+total;
+          document.getElementById("rTxn").innerText="MoMo Txn: "+momoID;
+          receipt.style.display="block";
 
-db.ref("orders").push(order);
-
-// WhatsApp
-let msg=`🐔 NEW ORDER
+          // WhatsApp - CHANGE THIS NUMBER TO YOUR ACTUAL WHATSAPP NUMBER
+          let msg=`🐔 NEW ORDER
 Name: ${name}
 Phone: ${phone}
 ID: ${idNumber}
 Address: ${address}
-Size: ${size}
+Type: ${type==="full"?"Full Chicken":"Cut Pieces"}
+Size: ${size} kg
 Qty: ${qty}
-Delivery: ${time}
+Service Fee: E${service}
+Total: E${total}
 
 Deposit: E50
 Date: ${payDate}
 Time: ${payTime}
 MoMo Txn: ${momoID}`;
-
-let whatsapp="26876123456"; // 👈 CHANGE
-window.open("https://wa.me/"+whatsapp+"?text="+encodeURIComponent(msg),"_blank");
-
-// Receipt
-document.getElementById("rName").innerText="Name: "+name;
-document.getElementById("rPhone").innerText="Phone: "+phone;
-document.getElementById("rOrder").innerText=`Order: ${size} x ${qty}`;
-document.getElementById("rDeposit").innerText="Deposit: E50 (Refundable)";
-document.getElementById("rTxn").innerText="MoMo Txn: "+momoID;
-receipt.style.display="block";
-
-modal.style.display="flex";
-form.reset();
+          let whatsapp="886979562036"; // 🔴 REPLACE WITH YOUR REAL WHATSAPP NUMBER
+          window.open("https://wa.me/"+whatsapp+"?text="+encodeURIComponent(msg),"_blank");
+      }
+  });
 });
 
-function closeModal(){modal.style.display="none";}
-
+// Admin toggle
 function showAdmin(){
-adminPanel.style.display="block";
-db.ref("orders").on("value",snap=>{
-let html="";
-snap.forEach(s=>{
-let o=s.val();
-html+=`<p>📦 ${o.name} - ${o.qty} (${o.size})</p>`;
-});
-ordersList.innerHTML=html;
-});
+    adminPanel.style.display="block";
+    // Scroll to admin panel
+    adminPanel.scrollIntoView({behavior: "smooth"});
 }
+function hideAdmin(){adminPanel.style.display="none";}
 
-function hideAdmin(){
-adminPanel.style.display="none";
-}
+// Initialize price on page load
+window.onload = function() {
+    updatePrice();
+};
 </script>
-
 </body>
 </html>
