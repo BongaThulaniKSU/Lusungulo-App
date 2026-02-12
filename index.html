@@ -1,2030 +1,412 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Lusungulo Fresh Broilers - LIVE Stock Updates</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#2e7d32">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="https://i.imgur.com/4xM5Z5H.png">
-<link rel="manifest" href="data:application/manifest+json,{
-  &quot;name&quot;: &quot;Lusungulo Fresh Broilers&quot;,
-  &quot;short_name&quot;: &quot;Lusungulo&quot;,
-  &quot;description&quot;: &quot;Order fresh broilers online&quot;,
-  &quot;start_url&quot;: &quot;.&quot;,
-  &quot;display&quot;: &quot;standalone&quot;,
-  &quot;background_color&quot;: &quot;#2e7d32&quot;,
-  &quot;theme_color&quot;: &quot;#2e7d32&quot;,
-  &quot;orientation&quot;: &quot;portrait&quot;,
-  &quot;icons&quot;: [
-    {
-      &quot;src&quot;: &quot;https://i.imgur.com/4xM5Z5H.png&quot;,
-      &quot;sizes&quot;: &quot;192x192&quot;,
-      &quot;type&quot;: &quot;image/png&quot;,
-      &quot;purpose&quot;: &quot;any maskable&quot;
-    },
-    {
-      &quot;src&quot;: &quot;https://i.imgur.com/4xM5Z5H.png&quot;,
-      &quot;sizes&quot;: &quot;512x512&quot;,
-      &quot;type&quot;: &quot;image/png&quot;,
-      &quot;purpose&quot;: &quot;any maskable&quot;
-    }
-  ]
-}">
-
-<!-- FontAwesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- QR Code Scanner Library -->
-<script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-body{
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,#f5f5f5 0%,#e8f5e9 100%);
-  margin:0;
-  padding:10px;
-  color:#333;
-}
-.app{
-  max-width:550px;
-  margin:auto;
-  background:white;
-  border-radius:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,.2);
-  overflow:hidden;
-  padding-bottom:20px;
-}
-header{
-  background:#2e7d32;
-  color:white;
-  padding:20px;
-  text-align:center;
-  position:relative;
-}
-header h2{
-  margin-bottom:5px;
-  font-size:24px;
-}
-header p{
-  font-size:16px;
-  margin:5px 0;
-}
-.welcome-badge {
-  background:#ffd700;
-  color:#333;
-  padding:8px 15px;
-  border-radius:20px;
-  display:inline-block;
-  margin-top:10px;
-  font-weight:bold;
-}
-.offline-badge {
-  background:#ff6f00;
-  color:white;
-  padding:5px 10px;
-  border-radius:20px;
-  display:inline-block;
-  margin-top:5px;
-  font-size:12px;
-}
-.stock-badge {
-  background:#ff6f00;
-  color:white;
-  padding:8px 15px;
-  border-radius:20px;
-  display:inline-block;
-  margin-top:5px;
-  font-weight:bold;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-.whatsapp-float {
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  background:#25d366;
-  color:white;
-  border-radius:50px;
-  padding:15px 25px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.3);
-  z-index:1000;
-  cursor:pointer;
-  border:none;
-  font-size:16px;
-  font-weight:bold;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  animation:pulse 2s infinite;
-  text-decoration:none;
-}
-.whatsapp-float i {
-  font-size:24px;
-}
-.install-button {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#2e7d32;
-  color:white;
-  border-radius:50px;
-  padding:15px 25px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.3);
-  z-index:1000;
-  cursor:pointer;
-  border:none;
-  font-size:16px;
-  font-weight:bold;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.install-button i {
-  font-size:24px;
-}
-.qr-float {
-  position:fixed;
-  bottom:100px;
-  right:20px;
-  background:#2196f3;
-  color:white;
-  border-radius:50px;
-  padding:15px 20px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.3);
-  z-index:1000;
-  cursor:pointer;
-  border:none;
-  font-size:16px;
-  font-weight:bold;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.qr-float i {
-  font-size:24px;
-}
-@media (display-mode: standalone) {
-  .install-button {
-    display: none !important;
-  }
-}
-.special-deal {
-  background: linear-gradient(45deg,#ff9a9e,#fad0c4);
-  color:white;
-  padding:15px;
-  text-align:center;
-  border-radius:12px;
-  font-weight:bold;
-  margin:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  animation: pulse 1.5s infinite;
-  font-size:16px;
-}
-.section{padding:15px;}
-input,select,textarea{
-  width:100%;
-  padding:12px;
-  margin-top:8px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:16px;
-  box-sizing: border-box;
-}
-button{
-  padding:14px;
-  margin-top:12px;
-  width:100%;
-  border:none;
-  border-radius:10px;
-  background:#4caf50;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  font-weight:bold;
-  transition: all 0.3s;
-}
-button:hover{background:#388e3c;}
-.btn-warning{
-  background:#ff9800;
-}
-.btn-warning:hover{background:#f57c00;}
-.btn-danger{
-  background:#f44336;
-}
-.btn-danger:hover{background:#d32f2f;}
-.btn-info{
-  background:#2196f3;
-}
-.btn-info:hover{background:#1976d2;}
-.btn-success{
-  background:#4caf50;
-}
-.notice{
-  background:#c8e6c9;
-  padding:12px;
-  border-left:5px solid green;
-  margin:15px 0;
-  font-size:14px;
-  border-radius:5px;
-}
-#receipt{display:none;}
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
-}
-.modal-box{
-  background:white;
-  padding:25px;
-  border-radius:15px;
-  text-align:center;
-  max-width:90%;
-  max-height:90vh;
-  overflow-y:auto;
-}
-img.option-img{
-  width:100%;
-  border-radius:10px;
-  margin-top:10px;
-}
-.price-box{
-  background:#fff3e0;
-  padding:15px;
-  margin-top:15px;
-  border-left:5px solid #fb8c00;
-  font-weight:bold;
-  text-align:center;
-  font-size:20px;
-  transition: transform 0.2s;
-  border-radius:5px;
-}
-.menu-card{
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
-  margin-bottom:15px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  text-align:center;
-  background:white;
-  cursor:pointer;
-  position:relative;
-}
-.menu-card img{width:100%;height:200px;object-fit:cover;}
-.menu-card:hover{
-  transform:scale(1.03);
-  box-shadow:0 15px 30px rgba(0,0,0,.3);
-}
-.menu-card h4{color:#2e7d32;margin:12px 0;font-size:18px;}
-.menu-card p{font-weight:bold;color:#fb8c00;font-size:20px;}
-.stock-indicator{
-  position:absolute;
-  top:10px;
-  right:10px;
-  background:rgba(0,0,0,0.7);
-  color:white;
-  padding:5px 15px;
-  border-radius:20px;
-  font-size:14px;
-  font-weight:bold;
-}
-.low-stock{
-  background:#ff9800;
-}
-.out-stock{
-  background:#f44336;
-}
-.in-stock{
-  background:#4caf50;
-}
-.icon-input{
-  display:flex;
-  align-items:center;
-  margin-top:10px;
-}
-.icon-input i{
-  margin-right:12px;
-  color:#2e7d32;
-  min-width:20px;
-  font-size:18px;
-}
-.icon-input input, .icon-input select, .icon-input textarea {
-  flex: 1;
-}
-#qty {
-  width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-.tabs {
-  display: flex;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eee;
-  flex-wrap: wrap;
-  background:#f5f5f5;
-}
-.tab {
-  flex: 1;
-  padding: 15px 5px;
-  text-align: center;
-  cursor: pointer;
-  background: #f5f5f5;
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  min-width: 80px;
-  font-size:14px;
-  font-weight:bold;
-}
-.tab.active {
-  background: #4caf50;
-  color: white;
-}
-.tab-content {
-  display: none;
-}
-.tab-content.active {
-  display: block;
-}
-.payment-option {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  margin: 10px 0;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.payment-option.selected {
-  border-color: #4caf50;
-  background: #e8f5e9;
-}
-.payment-option i {
-  font-size: 24px;
-  margin-right: 15px;
-  color: #2e7d32;
-}
-.rating {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-  gap: 5px;
-  margin: 15px 0;
-}
-.rating input {
-  display: none;
-}
-.rating label {
-  font-size: 30px;
-  color: #ddd;
-  cursor: pointer;
-}
-.rating label:hover,
-.rating label:hover ~ label,
-.rating input:checked ~ label {
-  color: #ffc107;
-}
-.customer-review-card {
-  background: white;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border-left: 5px solid #ff9800;
-}
-.rating-display {
-  color: #ffc107;
-  font-size: 20px;
-}
-.qr-reader {
-  width: 100%;
-  margin-top: 10px;
-}
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
-}
-.filters button {
-  flex: 1;
-  margin: 0;
-  padding: 10px;
-  font-size: 14px;
-}
-.customer-access {
-  background: linear-gradient(135deg,#f5f5f5 0%,#e8f5e9 100%);
-  padding: 20px;
-  border-radius: 15px;
-  margin: 15px;
-  text-align: center;
-  border: 2px dashed #4caf50;
-}
-.access-title {
-  color: #2e7d32;
-  font-size: 18px;
-  margin-bottom: 15px;
-}
-.access-qr {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  display: inline-block;
-  margin: 10px auto;
-}
-.access-link {
-  display: inline-block;
-  background: #25d366;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 10px;
-}
-.qr-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background: white;
-  border-radius: 15px;
-  margin-top: 10px;
-}
-.qr-code {
-  padding: 15px;
-  background: white;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-}
-.tracking-step {
-  display: flex;
-  margin-bottom: 15px;
-  padding: 12px;
-  background: #f5f5f5;
-  border-radius: 10px;
-}
-.tracking-step .step-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  color: white;
-}
-.step-completed .step-icon {
-  background: #4caf50;
-}
-.step-active .step-icon {
-  background: #ff9800;
-  animation: pulse 1.5s infinite;
-}
-.step-content {
-  flex: 1;
-  text-align:left;
-}
-.status-pending{color:#ff9800; font-weight:bold;}
-.status-processing{color:#2196f3; font-weight:bold;}
-.status-ready{color:#4caf50; font-weight:bold;}
-.status-delivered{color:#9c27b0; font-weight:bold;}
-.order-card {
-  background: white;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  border-left: 5px solid #ff9800;
-}
-.order-card h4 {
-  margin-top: 0;
-  color: #2e7d32;
-}
-.stock-update-toast {
-  position: fixed;
-  bottom: 180px;
-  left: 20px;
-  right: 20px;
-  background: #4caf50;
-  color: white;
-  padding: 12px;
-  border-radius: 50px;
-  text-align: center;
-  font-weight: bold;
-  z-index: 10000;
-  animation: slideIn 0.5s;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-}
-@keyframes slideIn {
-  from { transform: translateY(100px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐔 Lusungulo - Fresh Broilers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            padding: 20px;
+        }
+        
+        .app {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .stock-box {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .deal {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background: #1b5e20;
+        }
+        
+        .admin-btn {
+            background: #757575;
+        }
+        
+        .admin-section {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .price-box {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff9800;
+            margin: 20px 0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-
-<!-- FLOATING BUTTONS -->
-<a id="whatsappFloat" href="https://wa.me/26876123456" target="_blank" class="whatsapp-float">
-  <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
-</a>
-
-<button id="installButton" class="install-button">
-  <i class="fa-solid fa-download"></i> Install App
-</button>
-
-<button onclick="openQRScanner()" class="qr-float">
-  <i class="fa-solid fa-qrcode"></i> Scan QR
-</button>
-
-<div class="app">
-<header>
-  <h2>🐔 Lusungulo Fresh Broilers</h2>
-  <p>Fresh, Delicious & Ready for You!</p>
-  <div class="welcome-badge">
-    <i class="fa-solid fa-face-smile"></i> Welcome Customer!
-  </div>
-  <div id="offlineStatus" class="offline-badge" style="display:none;">
-    <i class="fa-solid fa-wifi-slash"></i> OFFLINE MODE
-  </div>
-  <div class="stock-badge" id="totalStockDisplay">
-    <i class="fa-solid fa-chicken"></i> Loading stock...
-  </div>
-</header>
-
-<div class="customer-access">
-  <div class="access-title">
-    <i class="fa-solid fa-mobile-screen-button"></i> Access Lusungulo Anywhere!
-  </div>
-  <div class="access-qr">
-    <div id="customerQRCode" style="width:150px; height:150px; margin:0 auto;"></div>
-  </div>
-  <p style="margin:10px 0; font-size:14px;">
-    <i class="fa-solid fa-camera"></i> Scan QR code to open app
-  </p>
-  <a id="customerWhatsAppLink" href="https://wa.me/26876123456" target="_blank" class="access-link">
-    <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
-  </a>
-  <p style="margin:10px 0; font-size:13px; color:#666;">
-    <i class="fa-solid fa-arrow-up"></i> Click "Install App" to add to home screen!
-  </p>
-</div>
-
-<div class="special-deal">
-  🎉 SPECIAL DEAL: Buy 2 Medium Chickens, Get 1 Small FREE! 🎉
-</div>
-
-<!-- Tabs -->
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('customer')">🛒 ORDER</button>
-  <button class="tab" onclick="switchTab('track')">📍 TRACK</button>
-  <button class="tab" onclick="switchTab('rate')">⭐ RATE</button>
-  <button class="tab" onclick="switchTab('reviews')">👥 REVIEWS</button>
-  <button class="tab" onclick="switchTab('scan')">📱 SCAN</button>
-</div>
-
-<!-- CUSTOMER ORDER TAB -->
-<div id="customerTab" class="tab-content active">
-<div class="section">
-<div class="notice">
-  <i class="fa-solid fa-lock"></i> 🔐 E50 refundable deposit required for MoMo payments
-</div>
-
-<form id="orderForm">
-  <div class="icon-input">
-    <i class="fa-solid fa-user"></i>
-    <input id="name" placeholder="Full Name" required>
-  </div>
-  <div class="icon-input">
-    <i class="fa-solid fa-phone"></i>
-    <input id="phone" placeholder="Phone Number" required>
-  </div>
-  <div class="icon-input">
-    <i class="fa-solid fa-id-card"></i>
-    <input id="idNumber" placeholder="National ID Number" required>
-  </div>
-  <div class="icon-input">
-    <i class="fa-solid fa-house"></i>
-    <input id="address" placeholder="Delivery Address" required>
-  </div>
-
-  <h4>🐔 Available Birds in Stock</h4>
-  <div id="liveStockDisplay"></div>
-
-  <h4>🐔 Select Size</h4>
-  <div id="sizeCards"></div>
-  <select id="size" required style="display:none;">
-    <option value="">Select Size</option>
-    <option value="1.5">Small (1.5 kg)</option>
-    <option value="2.0">Medium (2 kg)</option>
-    <option value="2.5">Large (2.5 kg)</option>
-  </select>
-
-  <h4>📦 Quantity</h4>
-  <input type="number" id="qty" placeholder="Quantity" value="1" min="1" required>
-
-  <h4>🍗 Select Type</h4>
-  <select id="type" required>
-    <option value="">Select Type</option>
-    <option value="full">Full Chicken</option>
-    <option value="cut">Cut Pieces</option>
-  </select>
-
-  <img id="fullImg" class="option-img" src="https://images.unsplash.com/photo-1604908177524-9f409a8b3d95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" style="display:none;" alt="Full Chicken">
-  <img id="cutImg" class="option-img" src="https://images.unsplash.com/photo-1601050692362-9f90f13ee824?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" style="display:none;" alt="Cut Pieces">
-
-  <div id="services" style="display:none;">
-    <h4>🍴 Select Service (Full Chicken Only)</h4>
-    <select id="service">
-      <option value="">No Service</option>
-      <option value="5">Ready to Cook + E5</option>
-      <option value="10">Curry Cut + E10</option>
-    </select>
-    <img id="serviceImg" class="option-img" style="display:none;" alt="Service Image">
-  </div>
-
-  <h4>💳 Payment Method</h4>
-  <div id="paymentOptions">
-    <div class="payment-option" onclick="selectPayment('momo')" id="paymentMomo">
-      <i class="fa-solid fa-mobile-alt"></i>
-      <div style="flex:1; text-align:left;">
-        <strong>MoMo (Mobile Money)</strong><br>
-        <small>Pay E50 deposit via Mobile Money</small>
-      </div>
-      <i class="fa-solid fa-check-circle" id="checkMomo" style="color:#4caf50; display:none;"></i>
-    </div>
-    <div class="payment-option" onclick="selectPayment('cash')" id="paymentCash">
-      <i class="fa-solid fa-money-bill-wave"></i>
-      <div style="flex:1; text-align:left;">
-        <strong>Cash on Delivery</strong><br>
-        <small>Pay full amount when order arrives</small>
-      </div>
-      <i class="fa-solid fa-check-circle" id="checkCash" style="color:#4caf50; display:none;"></i>
-    </div>
-  </div>
-  <input type="hidden" id="paymentMethod" value="momo">
-
-  <div id="momoFields">
-    <h4>💳 MoMo Payment Details</h4>
-    <div class="icon-input">
-      <i class="fa-solid fa-calendar"></i>
-      <input type="date" id="payDate" required>
-    </div>
-    <div class="icon-input">
-      <i class="fa-solid fa-clock"></i>
-      <input type="time" id="payTime" required>
-    </div>
-    <div class="icon-input">
-      <i class="fa-solid fa-user"></i>
-      <input id="momoName" placeholder="Your Name as Registered in MoMo" required>
-    </div>
-  </div>
-
-  <div id="cashFields" style="display:none;">
-    <h4>💵 Cash on Delivery</h4>
-    <div class="notice">
-      <i class="fa-solid fa-info-circle"></i> Pay full amount E<span id="cashTotal">0</span> when your order arrives
-    </div>
-  </div>
-
-  <div class="price-box">
-    Total Price: <span id="totalPrice">0</span> E
-  </div>
-
-  <button type="submit">
-    <i class="fa-brands fa-whatsapp"></i> SEND ORDER VIA WHATSAPP
-  </button>
-</form>
-
-<button onclick="switchTab('track')" class="btn-info">
-  <i class="fa-solid fa-location-dot"></i> TRACK YOUR ORDER
-</button>
-</div>
-
-<!-- RECEIPT -->
-<div id="receipt" class="section">
-  <h3>🧾 ORDER RECEIPT</h3>
-  <p id="rName"></p>
-  <p id="rPhone"></p>
-  <p id="rOrder"></p>
-  <p id="rDeposit"></p>
-  <p id="rTotal"></p>
-  <p id="rPayment"></p>
-  <p id="rMomoName"></p>
-  <p id="rTracking"></p>
-  <div id="rQRCode" style="margin:15px auto;"></div>
-  <button onclick="window.print()">🖨 Print Receipt</button>
-  <button onclick="switchTab('track')" class="btn-info">📍 Track Order</button>
-  <button onclick="switchTab('rate')" class="btn-warning">⭐ Rate Your Order</button>
-</div>
-</div>
-
-<!-- TRACKING TAB -->
-<div id="trackTab" class="tab-content">
-<div class="section">
-  <h3>📍 TRACK YOUR ORDER</h3>
-  <div class="icon-input">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input id="trackPhone" placeholder="Enter your phone number">
-  </div>
-  <button onclick="trackOrder()">
-    <i class="fa-solid fa-search"></i> TRACK ORDER
-  </button>
-  <div id="trackingResult" style="margin-top:20px;"></div>
-</div>
-</div>
-
-<!-- RATING TAB -->
-<div id="rateTab" class="tab-content">
-<div class="section">
-  <h3>⭐ RATE & REVIEW</h3>
-  <div class="icon-input">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input id="ratePhone" placeholder="Enter your phone number to review">
-  </div>
-  <button onclick="loadOrdersForRating()">
-    <i class="fa-solid fa-search"></i> FIND MY ORDERS
-  </button>
-  <div id="ordersForRating" style="margin-top:20px;"></div>
-</div>
-</div>
-
-<!-- REVIEWS TAB -->
-<div id="reviewsTab" class="tab-content">
-<div class="section">
-  <h3>👥 CUSTOMER REVIEWS</h3>
-  <div class="filters">
-    <button onclick="loadPublicReviews('all')" class="btn-info">⭐ ALL REVIEWS</button>
-    <button onclick="loadPublicReviews('high')" class="btn-success">🌟🌟🌟🌟🌟</button>
-    <button onclick="loadPublicReviews('low')" class="btn-warning">⭐⭐⭐</button>
-  </div>
-  <div id="publicReviewsList"></div>
-</div>
-</div>
-
-<!-- QR SCAN TAB -->
-<div id="scanTab" class="tab-content">
-<div class="section">
-  <h3>📱 SCAN ORDER QR CODE</h3>
-  <p>Scan your order receipt QR code to track instantly</p>
-  <div id="qr-reader" style="width:100%;"></div>
-  <div id="qr-result" style="margin-top:20px;"></div>
-  <div style="display:flex; gap:10px; margin-top:15px;">
-    <button onclick="startQRScanner()" class="btn-info">
-      <i class="fa-solid fa-camera"></i> START SCANNER
-    </button>
-    <button onclick="stopQRScanner()" class="btn-warning">
-      <i class="fa-solid fa-stop"></i> STOP SCANNER
-    </button>
-  </div>
-</div>
-</div>
-
-<!-- ADMIN LOGIN -->
-<div style="text-align:center; margin-top:30px; padding:15px; border-top:1px solid #eee;">
-  <button onclick="showAdminLogin()" style="background:#9e9e9e; width:auto; padding:8px 20px; font-size:14px;">
-    👑 Admin Access
-  </button>
-</div>
-
-</div>
-
-<!-- ADMIN LOGIN MODAL -->
-<div id="adminLoginModal" class="modal">
-  <div class="modal-box">
-    <h3>👑 ADMIN LOGIN</h3>
-    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-    <button onclick="verifyAdmin()" style="background:#4caf50;">LOGIN</button>
-    <button onclick="closeLoginModal()" style="background:#f44336;">CANCEL</button>
-    <p style="margin-top:15px; font-size:12px; color:#666;">Default password: admin123</p>
-  </div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="adminSection" style="display:none; padding:20px; margin:20px; background:#f5f5f5; border-radius:15px;">
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-    <h3 style="margin:0;">👑 ADMIN PANEL</h3>
-    <button onclick="logoutAdmin()" style="background:#f44336; width:auto; padding:8px 15px;">🚪 LOGOUT</button>
-  </div>
-  
-  <!-- FIREBASE RULES CHECK -->
-  <div style="background:#ffebee; padding:15px; border-radius:10px; margin-bottom:20px; border-left:5px solid #f44336;">
-    <h4 style="color:#f44336; margin-top:0;">⚠️ IMPORTANT: SET FIREBASE RULES</h4>
-    <p style="margin-bottom:10px;">Stock updates are not working because Firebase Realtime Database rules are blocking writes.</p>
-    <p style="font-weight:bold;">Copy and paste this in Firebase Console → Realtime Database → Rules:</p>
-    <pre style="background:#333; color:#fff; padding:15px; border-radius:5px; overflow-x:auto; text-align:left;">
-{
-  "rules": {
-    ".read": true,
-    ".write": true
-  }
-}</pre>
-    <button onclick="window.open('https://console.firebase.google.com/project/lusungulo-3a422/database/lusungulo-3a422-default-rtdb/rules', '_blank')" style="background:#2196f3; margin-top:10px;">
-      🔧 OPEN FIREBASE RULES
-    </button>
-  </div>
-  
-  <!-- UPDATE CUSTOMER ACCESS -->
-  <div style="background:#e8f5e9; padding:20px; border-radius:10px; margin-bottom:20px;">
-    <h4>📱 CUSTOMER ACCESS SETTINGS</h4>
-    <input type="text" id="adminWhatsappNumber" placeholder="WhatsApp Number (e.g., 26876123456)" value="26876123456" style="margin-bottom:10px;">
-    <button onclick="updateCustomerAccess()" class="btn-info">
-      <i class="fa-solid fa-qrcode"></i> UPDATE QR & WHATSAPP
-    </button>
-  </div>
-  
-  <!-- STOCK MANAGEMENT - DIRECT WRITE TEST -->
-  <div style="background:#fff3e0; padding:20px; border-radius:10px; margin-bottom:20px;">
-    <h4>📦 STOCK MANAGEMENT</h4>
-    
-    <!-- DIRECT TEST BUTTON -->
-    <div style="background:#e8eaf6; padding:15px; border-radius:10px; margin-bottom:15px;">
-      <p style="font-weight:bold; color:#2196f3;">🔴 STOCK NOT UPDATING? TRY THIS TEST:</p>
-      <button onclick="testDirectStockWrite()" style="background:#f44336; color:white; font-size:18px; padding:15px;">
-        🧪 CLICK HERE TO TEST STOCK UPDATE
-      </button>
-      <p style="margin-top:10px; font-size:14px;">This bypasses all checks and writes directly to Firebase.</p>
-    </div>
-    
-    <div id="stockManagement"></div>
-    <div style="display:flex; gap:10px; margin-top:15px;">
-      <button onclick="showAddStockModal()" class="btn-info" style="flex:1;">➕ ADD NEW BATCH</button>
-      <button onclick="showAdjustStockModal()" class="btn-warning" style="flex:1;">✏️ ADJUST STOCK</button>
-    </div>
-  </div>
-  
-  <!-- CUSTOMER STATS -->
-  <div style="background:#e3f2fd; padding:20px; border-radius:10px; margin-bottom:20px;">
-    <h4>👥 CUSTOMER STATISTICS</h4>
-    <div id="customerStats"></div>
-  </div>
-  
-  <!-- ALL ORDERS -->
-  <h4>📋 ALL ORDERS</h4>
-  <div id="ordersList" style="margin-bottom:20px;"></div>
-  
-  <div style="display:flex; gap:10px;">
-    <button onclick="exportOrders()" class="btn-info" style="flex:1;">📊 EXPORT ORDERS</button>
-    <button onclick="exportCustomers()" class="btn-info" style="flex:1;">📊 EXPORT CUSTOMERS</button>
-  </div>
-</div>
-
-<!-- ADD STOCK MODAL -->
-<div id="addStockModal" class="modal">
-  <div class="modal-box">
-    <h3>➕ ADD NEW BATCH</h3>
-    <select id="stockSize">
-      <option value="1.5">Small (1.5kg)</option>
-      <option value="2.0">Medium (2kg)</option>
-      <option value="2.5">Large (2.5kg)</option>
-    </select>
-    <input type="number" id="stockQuantity" placeholder="Quantity to Add" min="1">
-    <input type="number" id="stockPrice" placeholder="Price per kg" value="45">
-    <button onclick="addStock()" style="background:#4caf50;">ADD TO INVENTORY</button>
-    <button onclick="closeModal()" style="background:#f44336;">CANCEL</button>
-  </div>
-</div>
-
-<!-- ADJUST STOCK MODAL -->
-<div id="adjustStockModal" class="modal">
-  <div class="modal-box">
-    <h3>✏️ ADJUST STOCK</h3>
-    <select id="adjustSize" style="margin-bottom:15px;">
-      <option value="1.5">Small (1.5kg)</option>
-      <option value="2.0">Medium (2kg)</option>
-      <option value="2.5">Large (2.5kg)</option>
-    </select>
-    <div style="display:flex; gap:10px; margin-top:10px; margin-bottom:15px;">
-      <button onclick="adjustStockFromModal(-1)" class="btn-warning" style="flex:1;">-1</button>
-      <button onclick="adjustStockFromModal(-5)" class="btn-warning" style="flex:1;">-5</button>
-      <button onclick="adjustStockFromModal(-10)" class="btn-warning" style="flex:1;">-10</button>
-    </div>
-    <div style="display:flex; gap:10px; margin-bottom:15px;">
-      <button onclick="adjustStockFromModal(1)" class="btn-success" style="flex:1;">+1</button>
-      <button onclick="adjustStockFromModal(5)" class="btn-success" style="flex:1;">+5</button>
-      <button onclick="adjustStockFromModal(10)" class="btn-success" style="flex:1;">+10</button>
-    </div>
-    <div style="margin-top:15px;">
-      <label style="display:block; text-align:left; margin-bottom:5px;">Custom Quantity:</label>
-      <input type="number" id="customAdjust" placeholder="Enter quantity" min="1" style="width:100%; padding:10px;">
-    </div>
-    <div style="display:flex; gap:10px; margin-top:15px;">
-      <button onclick="adjustStockFromModal(0)" class="btn-info" style="flex:1;">APPLY CUSTOM</button>
-      <button onclick="closeAdjustModal()" style="background:#f44336; flex:1;">CANCEL</button>
-    </div>
-  </div>
-</div>
-
-<!-- RATING MODAL -->
-<div id="ratingModal" class="modal">
-  <div class="modal-box">
-    <h3>⭐ RATE YOUR ORDER</h3>
-    <div id="ratingOrderDetails"></div>
-    <div class="rating">
-      <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
-      <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
-      <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
-      <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
-      <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
-    </div>
-    <textarea id="reviewComment" placeholder="Write your review here..." rows="4"></textarea>
-    <button onclick="submitRating()" style="background:#4caf50;">SUBMIT REVIEW</button>
-    <button onclick="closeRatingModal()" style="background:#f44336;">CANCEL</button>
-  </div>
-</div>
-
-<!-- CONFIRM DELIVERY MODAL -->
-<div id="confirmModal" class="modal">
-  <div class="modal-box">
-    <h3>✅ CONFIRM DELIVERY</h3>
-    <p>Have you received your order?</p>
-    <div id="confirmOrderDetails"></div>
-    <button onclick="confirmDelivery()" style="background:#4caf50;">YES, I RECEIVED IT</button>
-    <button onclick="closeConfirmModal()" style="background:#f44336;">CANCEL</button>
-  </div>
-</div>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
-<script>
-// ============================================
-// 🔥🔥🔥 FIREBASE CONFIGURATION 🔥🔥🔥
-// ============================================
-var firebaseConfig = {
-  apiKey: "AIzaSyCXJeodZbNeGyLfJgQrqYriJVdgi-GOA1o",
-  authDomain: "lusungulo-3a422.firebaseapp.com",
-  databaseURL: "https://lusungulo-3a422-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "lusungulo-3a422",
-  storageBucket: "lusungulo-3a422.firebasestorage.app",
-  messagingSenderId: "644814725574",
-  appId: "1:644814725574:web:cfbaa03a1ee7ba7e1e7ac7",
-  measurementId: "G-E25HW7HNZ6"
-};
-
-// Initialize Firebase
-try {
-  firebase.initializeApp(firebaseConfig);
-  console.log("✅ Firebase initialized successfully");
-} catch (error) {
-  console.error("❌ Firebase initialization error:", error);
-  alert("Firebase initialization failed: " + error.message);
-}
-
-var db = firebase.database();
-
-// ============================================
-// 🔧 FIREBASE CONNECTION TEST
-// ============================================
-function testFirebaseConnection() {
-  console.log("🧪 Testing Firebase connection...");
-  
-  const testRef = db.ref(".info/connected");
-  testRef.on("value", function(snap) {
-    if (snap.val() === true) {
-      console.log("✅ Connected to Firebase Realtime Database");
-    } else {
-      console.log("❌ Not connected to Firebase");
-    }
-  });
-}
-testFirebaseConnection();
-
-// ============================================
-// 📦 STOCK MANAGEMENT - DIRECT WRITE (FIXED)
-// ============================================
-let BUSINESS_WHATSAPP = "26876123456";
-
-// DIRECT TEST FUNCTION - USE THIS FIRST!
-function testDirectStockWrite() {
-  console.log("🧪 Running direct stock write test...");
-  
-  // Show loading
-  Swal.fire({
-    title: 'Testing Stock Update',
-    text: 'Attempting to write to Firebase...',
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    }
-  });
-  
-  // Get current stock first
-  db.ref("stock").once("value")
-    .then(snapshot => {
-      const stock = snapshot.val() || {};
-      const currentQty = stock["1.5"]?.quantity || 0;
-      const newQty = currentQty + 1;
-      
-      console.log(`Current stock 1.5kg: ${currentQty}, adding 1 → ${newQty}`);
-      
-      // Direct write to Firebase
-      return db.ref("stock/1.5").set({
-        weight: 1.5,
-        quantity: newQty,
-        pricePerKg: 45,
-        lastUpdated: new Date().toISOString(),
-        testWrite: true
-      });
-    })
-    .then(() => {
-      console.log("✅ Direct stock write SUCCESSFUL!");
-      Swal.fire({
-        icon: 'success',
-        title: '✅ STOCK UPDATE SUCCESSFUL!',
-        html: 'Added 1 bird to Small (1.5kg)<br><br>Customer should see this immediately!',
-        timer: 3000,
-        showConfirmButton: true
-      });
-    })
-    .catch(error => {
-      console.error("❌ Direct stock write FAILED:", error);
-      
-      // This is the KEY error - likely Firebase Rules
-      Swal.fire({
-        icon: 'error',
-        title: '❌ FIREBASE RULES ERROR',
-        html: `
-          <p style="color:#f44336; font-weight:bold;">${error.message}</p>
-          <p>Your Firebase Realtime Database rules are BLOCKING writes.</p>
-          <p style="margin-top:15px; font-weight:bold;">Copy and paste this in Firebase Console:</p>
-          <pre style="background:#333; color:#fff; padding:10px; border-radius:5px; text-align:left;">
-{
-  "rules": {
-    ".read": true,
-    ".write": true
-  }
-}</pre>
-          <button onclick="window.open('https://console.firebase.google.com/project/lusungulo-3a422/database/lusungulo-3a422-default-rtdb/rules', '_blank')" 
-                  style="background:#2196f3; color:white; padding:10px 20px; border:none; border-radius:5px; margin-top:10px; cursor:pointer;">
-            🔧 OPEN FIREBASE RULES
-          </button>
-        `,
-        showConfirmButton: true,
-        confirmButtonText: 'OK'
-      });
-    });
-}
-
-// ============================================
-// 📋 INITIALIZE STOCK (if empty)
-// ============================================
-function initializeStock() {
-  console.log("📦 Checking if stock needs initialization...");
-  
-  db.ref("stock").once("value")
-    .then(snapshot => {
-      if (!snapshot.exists()) {
-        console.log("📦 Stock is empty, creating default stock...");
-        const defaultStock = {
-          "1.5": { weight: 1.5, quantity: 50, pricePerKg: 45, lastUpdated: new Date().toISOString() },
-          "2.0": { weight: 2.0, quantity: 35, pricePerKg: 45, lastUpdated: new Date().toISOString() },
-          "2.5": { weight: 2.5, quantity: 20, pricePerKg: 45, lastUpdated: new Date().toISOString() }
-        };
-        return db.ref("stock").set(defaultStock);
-      } else {
-        console.log("📦 Stock already exists:", snapshot.val());
-      }
-    })
-    .then(() => {
-      console.log("✅ Stock initialization complete");
-    })
-    .catch(error => {
-      console.error("❌ Stock initialization failed:", error);
-    });
-}
-initializeStock();
-
-// ============================================
-// 👂 REAL-TIME STOCK LISTENER (CUSTOMER VIEW)
-// ============================================
-function initializeStockListener() {
-  console.log("🟢 Initializing REAL-TIME stock listener...");
-  
-  db.ref("stock").on("value", function(snapshot) {
-    const stock = snapshot.val() || {};
-    console.log("📦 Stock update received from Firebase:", stock);
-    
-    // Update all customer displays
-    updateCustomerStockDisplay(stock);
-    updateTotalBirdsCount(stock);
-    updateSizeCards(stock);
-    
-    // Show toast notification
-    showStockUpdateToast(stock);
-    
-  }, function(error) {
-    console.error("❌ Stock listener error:", error);
-  });
-}
-
-function updateCustomerStockDisplay(stock) {
-  let totalBirds = 0;
-  let html = '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">';
-  
-  ['1.5', '2.0', '2.5'].forEach(weight => {
-    const item = stock[weight] || { quantity: 0, pricePerKg: 45 };
-    totalBirds += parseInt(item.quantity) || 0;
-    
-    let stockClass = 'in-stock';
-    let stockText = `${item.quantity || 0} available`;
-    if (item.quantity <= 0) {
-      stockClass = 'out-stock';
-      stockText = 'OUT OF STOCK';
-    } else if (item.quantity <= 10) {
-      stockClass = 'low-stock';
-      stockText = `🔥 Only ${item.quantity} left!`;
-    }
-    
-    html += `<div class="menu-card" onclick="if(parseInt('${item.quantity}')>0) selectSize('${weight}')">
-              <img src="https://images.unsplash.com/photo-1604908177524-9f409a8b3d95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" alt="Chicken">
-              <div class="stock-indicator ${stockClass}">${stockText}</div>
-              <h4>${weight}kg</h4>
-              <p>E${item.pricePerKg || 45}/kg</p>
-            </div>`;
-  });
-  html += '</div>';
-  
-  const liveStockElement = document.getElementById('liveStockDisplay');
-  if (liveStockElement) liveStockElement.innerHTML = html;
-}
-
-function updateTotalBirdsCount(stock) {
-  let totalBirds = 0;
-  ['1.5', '2.0', '2.5'].forEach(weight => {
-    totalBirds += parseInt(stock[weight]?.quantity || 0);
-  });
-  
-  const totalStockElement = document.getElementById('totalStockDisplay');
-  if (totalStockElement) {
-    totalStockElement.innerHTML = `<i class="fa-solid fa-chicken"></i> Available: ${totalBirds} birds`;
-  }
-}
-
-function updateSizeCards(stock) {
-  let html = '';
-  ['1.5', '2.0', '2.5'].forEach(weight => {
-    const item = stock[weight] || { quantity: 0, pricePerKg: 45 };
-    const disabled = item.quantity <= 0 ? 'style="opacity:0.5; pointer-events:none;"' : '';
-    const price = (weight * (item.pricePerKg || 45)).toFixed(2);
-    const stockText = item.quantity <= 0 ? 'OUT OF STOCK' : `${item.quantity} available`;
-    const stockClass = item.quantity <= 0 ? 'out-stock' : (item.quantity <= 10 ? 'low-stock' : 'in-stock');
-    
-    html += `<div class="menu-card" onclick="document.getElementById('size').value='${weight}';updatePrice();" ${disabled}>
-              <img src="https://images.unsplash.com/photo-1604908177524-9f409a8b3d95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&h=200&w=400" alt="${weight}kg Chicken">
-              <div class="stock-indicator ${stockClass}">${stockText}</div>
-              <h4>${weight}kg Chicken</h4>
-              <p>E${price}</p>
-            </div>`;
-  });
-  
-  const sizeCardsElement = document.getElementById('sizeCards');
-  if (sizeCardsElement) sizeCardsElement.innerHTML = html;
-}
-
-function showStockUpdateToast(stock) {
-  let total = 0;
-  ['1.5', '2.0', '2.5'].forEach(w => total += parseInt(stock[w]?.quantity || 0));
-  
-  const toast = document.createElement('div');
-  toast.className = 'stock-update-toast';
-  toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Stock Updated! ${total} birds available now`;
-  document.body.appendChild(toast);
-  
-  setTimeout(() => { toast.remove(); }, 3000);
-}
-
-// ============================================
-// 👑 ADMIN STOCK MANAGEMENT (FIXED)
-// ============================================
-function loadAdminStockManagement() {
-  db.ref("stock").on("value", snap => {
-    const stock = snap.val() || {};
-    let html = '';
-    
-    ['1.5', '2.0', '2.5'].forEach(weight => {
-      const item = stock[weight] || { quantity: 0, pricePerKg: 45 };
-      html += `<div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #ddd;">
-                  <div><strong>${weight}kg</strong><br><small>E${item.pricePerKg}/kg</small></div>
-                  <div><span style="font-size:20px; font-weight:bold; color:${item.quantity <= 10 ? '#f44336' : '#4caf50'};">${item.quantity}</span> birds</div>
-                  <div style="display:flex; gap:5px;">
-                    <button onclick="adjustStock('${weight}', -1)" style="width:40px; padding:5px;" class="btn-warning">-</button>
-                    <button onclick="adjustStock('${weight}', 1)" style="width:40px; padding:5px;" class="btn-success">+</button>
-                    <button onclick="showSetPriceModal('${weight}', ${item.pricePerKg})" style="width:60px; padding:5px;" class="btn-info">Price</button>
-                  </div>
-                </div>`;
-    });
-    
-    document.getElementById('stockManagement').innerHTML = html;
-  });
-}
-
-// 🔧 FIXED: adjustStock with proper error handling
-function adjustStock(size, change) {
-  console.log(`📦 Adjusting stock: ${size}kg ${change > 0 ? '+' : ''}${change}`);
-  
-  // Show loading
-  Swal.fire({
-    title: 'Updating Stock...',
-    text: `${change > 0 ? 'Adding' : 'Removing'} ${Math.abs(change)} birds`,
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    }
-  });
-  
-  db.ref("stock/" + size).once("value")
-    .then(snapshot => {
-      const current = snapshot.val() || { 
-        quantity: 0, 
-        weight: parseFloat(size), 
-        pricePerKg: 45 
-      };
-      
-      const newQuantity = Math.max(0, (current.quantity || 0) + change);
-      console.log(`Current: ${current.quantity}, New: ${newQuantity}`);
-      
-      // Update Firebase
-      return db.ref("stock/" + size).update({
-        quantity: newQuantity,
-        lastUpdated: new Date().toISOString()
-      });
-    })
-    .then(() => {
-      console.log("✅ Stock update successful!");
-      Swal.fire({
-        icon: 'success',
-        title: 'Stock Updated!',
-        text: `${size}kg now has ${change > 0 ? '+' : ''}${change} = ${newQuantity} birds`,
-        timer: 2000,
-        showConfirmButton: false
-      });
-    })
-    .catch(error => {
-      console.error("❌ Stock update failed:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Stock Update Failed',
-        text: error.message,
-        footer: 'Check Firebase Console → Realtime Database → Rules'
-      });
-    });
-}
-
-// 🔧 FIXED: adjustStockFromModal with custom quantity
-function adjustStockFromModal(change) {
-  const size = document.getElementById('adjustSize').value;
-  
-  if (change === 0) {
-    const custom = document.getElementById('customAdjust').value;
-    if (!custom || custom === '') {
-      Swal.fire('Error', 'Enter a quantity', 'error');
-      return;
-    }
-    change = parseInt(custom);
-    if (isNaN(change) || change === 0) {
-      Swal.fire('Error', 'Enter a valid number', 'error');
-      return;
-    }
-  }
-  
-  adjustStock(size, change);
-  closeAdjustModal();
-}
-
-// 🔧 FIXED: addStock with proper error handling
-function addStock() {
-  const size = document.getElementById('stockSize').value;
-  const quantity = parseInt(document.getElementById('stockQuantity').value);
-  const price = parseFloat(document.getElementById('stockPrice').value);
-  
-  if (!quantity || quantity < 1) {
-    Swal.fire('Error', 'Enter valid quantity', 'error');
-    return;
-  }
-  
-  Swal.fire({
-    title: 'Adding Stock...',
-    text: `Adding ${quantity} birds to ${size}kg`,
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
-    }
-  });
-  
-  db.ref("stock/" + size).once("value")
-    .then(snapshot => {
-      const current = snapshot.val() || { 
-        quantity: 0, 
-        weight: parseFloat(size), 
-        pricePerKg: 45 
-      };
-      const newQuantity = (current.quantity || 0) + quantity;
-      
-      return db.ref("stock/" + size).set({
-        weight: parseFloat(size),
-        quantity: newQuantity,
-        pricePerKg: price,
-        lastUpdated: new Date().toISOString()
-      });
-    })
-    .then(() => {
-      console.log("✅ Batch added successfully!");
-      Swal.fire({
-        icon: 'success',
-        title: 'Batch Added!',
-        text: `Added ${quantity} birds to ${size}kg`,
-        timer: 2000,
-        showConfirmButton: false
-      });
-      closeModal();
-    })
-    .catch(error => {
-      console.error("❌ Add stock failed:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Failed to Add Stock',
-        text: error.message,
-        footer: 'Check Firebase Console → Realtime Database → Rules'
-      });
-    });
-}
-
-// ============================================
-// 🎯 OTHER FUNCTIONS
-// ============================================
-
-function selectSize(weight) {
-  document.getElementById('size').value = weight;
-  updatePrice();
-  document.getElementById('orderForm').scrollIntoView({behavior: "smooth"});
-}
-
-function updatePrice() {
-  let weight = parseFloat(sizeSelect.value) || 0;
-  let qty = parseInt(qtyInput.value) || 1;
-  let service = parseInt(serviceSelect.value) || 0;
-  
-  db.ref("stock/" + sizeSelect.value).once("value", snap => {
-    const stock = snap.val() || { pricePerKg: 45 };
-    const pricePerKg = stock.pricePerKg || 45;
-    let total = weight * pricePerKg * qty + service * qty;
-    totalBox.innerText = total.toFixed(2);
-    document.getElementById('cashTotal').innerText = total.toFixed(2);
-  });
-}
-
-function selectPayment(method) {
-  document.getElementById('paymentMethod').value = method;
-  
-  document.getElementById('checkMomo').style.display = 'none';
-  document.getElementById('checkCash').style.display = 'none';
-  
-  if (method === 'momo') {
-    document.getElementById('paymentMomo').classList.add('selected');
-    document.getElementById('paymentCash').classList.remove('selected');
-    document.getElementById('checkMomo').style.display = 'block';
-    document.getElementById('momoFields').style.display = 'block';
-    document.getElementById('cashFields').style.display = 'none';
-    
-    document.getElementById('payDate').required = true;
-    document.getElementById('payTime').required = true;
-    document.getElementById('momoName').required = true;
-  } else {
-    document.getElementById('paymentCash').classList.add('selected');
-    document.getElementById('paymentMomo').classList.remove('selected');
-    document.getElementById('checkCash').style.display = 'block';
-    document.getElementById('momoFields').style.display = 'none';
-    document.getElementById('cashFields').style.display = 'block';
-    
-    document.getElementById('payDate').required = false;
-    document.getElementById('payTime').required = false;
-    document.getElementById('momoName').required = false;
-  }
-}
-
-// Form elements
-const form = document.getElementById("orderForm");
-const receipt = document.getElementById("receipt");
-const sizeSelect = document.getElementById("size");
-const qtyInput = document.getElementById("qty");
-const typeSelect = document.getElementById("type");
-const serviceSelect = document.getElementById("service");
-const totalBox = document.getElementById("totalPrice");
-const fullImg = document.getElementById("fullImg");
-const cutImg = document.getElementById("cutImg");
-const servicesDiv = document.getElementById("services");
-
-typeSelect.addEventListener("change", () => {
-  if(typeSelect.value === "full"){
-    fullImg.style.display = "block";
-    cutImg.style.display = "none";
-    servicesDiv.style.display = "block";
-  } else if(typeSelect.value === "cut"){
-    fullImg.style.display = "none";
-    cutImg.style.display = "block";
-    servicesDiv.style.display = "none";
-    serviceSelect.value = "";
-  } else {
-    fullImg.style.display = "none";
-    cutImg.style.display = "none";
-    servicesDiv.style.display = "none";
-    serviceSelect.value = "";
-  }
-  updatePrice();
-});
-
-sizeSelect.addEventListener("change", updatePrice);
-qtyInput.addEventListener("input", updatePrice);
-
-// ============================================
-// 🔐 ADMIN AUTHENTICATION
-// ============================================
-const ADMIN_PASSWORD = "admin123";
-
-function showAdminLogin() {
-  document.getElementById('adminLoginModal').style.display = 'flex';
-}
-
-function closeLoginModal() {
-  document.getElementById('adminLoginModal').style.display = 'none';
-  document.getElementById('adminPassword').value = '';
-}
-
-function verifyAdmin() {
-  const password = document.getElementById('adminPassword').value;
-  
-  if (password === ADMIN_PASSWORD) {
-    closeLoginModal();
-    document.getElementById('adminSection').style.display = 'block';
-    loadAdminStockManagement();
-    loadAllOrders();
-    loadCustomerStats();
-    document.getElementById('adminWhatsappNumber').value = BUSINESS_WHATSAPP;
-    Swal.fire('Success', 'Admin login successful', 'success');
-  } else {
-    Swal.fire('Error', 'Incorrect password', 'error');
-  }
-}
-
-function logoutAdmin() {
-  document.getElementById('adminSection').style.display = 'none';
-}
-
-function updateCustomerAccess() {
-  const newNumber = document.getElementById('adminWhatsappNumber').value.replace(/\D/g, '');
-  
-  if (newNumber.length >= 10) {
-    BUSINESS_WHATSAPP = newNumber;
-    document.getElementById('whatsappFloat').href = `https://wa.me/${newNumber}`;
-    document.getElementById('customerWhatsAppLink').href = `https://wa.me/${newNumber}`;
-    generateCustomerQR(newNumber);
-    Swal.fire('Success', 'WhatsApp link updated!', 'success');
-  } else {
-    Swal.fire('Error', 'Enter valid phone number', 'error');
-  }
-}
-
-function generateCustomerQR(phoneNumber) {
-  const qrContainer = document.getElementById('customerQRCode');
-  const websiteUrl = window.location.href;
-  
-  qrContainer.innerHTML = '';
-  const qrImg = document.createElement('img');
-  qrImg.src = `https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=${encodeURIComponent(websiteUrl)}&choe=UTF-8`;
-  qrImg.style.width = '150px';
-  qrImg.style.height = '150px';
-  qrContainer.appendChild(qrImg);
-}
-
-// ============================================
-// 📱 QR SCANNER
-// ============================================
-let html5QrCode = null;
-
-function openQRScanner() {
-  switchTab('scan');
-  startQRScanner();
-}
-
-function startQRScanner() {
-  const qrReaderElement = document.getElementById('qr-reader');
-  qrReaderElement.innerHTML = '';
-  
-  html5QrCode = new Html5Qrcode("qr-reader");
-  
-  html5QrCode.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: { width: 250, height: 250 } },
-    onQRCodeSuccess,
-    onQRCodeError
-  ).catch(err => {
-    Swal.fire('Error', 'Cannot access camera', 'error');
-  });
-}
-
-function stopQRScanner() {
-  if (html5QrCode) {
-    html5QrCode.stop().then(() => {
-      html5QrCode.clear();
-      document.getElementById('qr-reader').innerHTML = '';
-    });
-  }
-}
-
-function onQRCodeSuccess(decodedText) {
-  const match = decodedText.match(/LS\d{8}/);
-  if (match) {
-    const trackingNumber = match[0];
-    stopQRScanner();
-    
-    db.ref("orders").orderByChild("trackingNumber").equalTo(trackingNumber).once("value", snap => {
-      if (snap.exists()) {
-        snap.forEach(orderSnap => {
-          const order = orderSnap.val();
-          document.getElementById('trackPhone').value = order.phone;
-          switchTab('track');
-          trackOrder();
-          Swal.fire('Order Found!', `Tracking #: ${trackingNumber}`, 'success');
-        });
-      } else {
-        Swal.fire('Not Found', 'No order found', 'error');
-      }
-    });
-  }
-}
-
-function onQRCodeError() {}
-
-// ============================================
-// 📋 ORDER TRACKING
-// ============================================
-function trackOrder() {
-  const phone = document.getElementById('trackPhone').value;
-  if (!phone) {
-    Swal.fire('Error', 'Enter your phone number', 'error');
-    return;
-  }
-  
-  db.ref("orders").orderByChild("phone").equalTo(phone).once("value", snap => {
-    let html = '';
-    
-    if (!snap.exists()) {
-      html = '<p style="text-align:center; color:#f44336;">No orders found</p>';
-    } else {
-      snap.forEach(orderSnap => {
-        const order = orderSnap.val();
-        const orderId = orderSnap.key;
+    <div class="app">
+        <h1>🐔 LUSUNGULO</h1>
+        <p style="text-align: center; color: #666;">Fresh Broilers - No Firebase!</p>
         
-        const statuses = ['pending', 'processing', 'ready', 'delivered'];
-        const statusNames = {
-          'pending': 'Order Received',
-          'processing': 'Processing',
-          'ready': 'Ready for Delivery',
-          'delivered': 'Delivered'
+        <div class="deal">
+            🎉 BUY 2 MEDIUM, GET 1 SMALL FREE! 🎉
+        </div>
+        
+        <div class="stock-box" id="stockDisplay">
+            🐔 Loading...
+        </div>
+        
+        <h3>📝 Place Order</h3>
+        
+        <input type="text" id="name" placeholder="Full Name">
+        <input type="tel" id="phone" placeholder="Phone Number">
+        <input type="text" id="address" placeholder="Delivery Address">
+        
+        <select id="size">
+            <option value="">-- Select Size --</option>
+            <option value="1.5">Small (1.5kg) - E67.50</option>
+            <option value="2.0">Medium (2.0kg) - E90.00</option>
+            <option value="2.5">Large (2.5kg) - E112.50</option>
+        </select>
+        
+        <input type="number" id="quantity" value="1" min="1">
+        
+        <div class="price-box" id="totalPrice">
+            Total: E0.00
+        </div>
+        
+        <button onclick="placeOrder()">📱 PLACE ORDER</button>
+        <button onclick="showAdminLogin()" class="admin-btn">👑 ADMIN LOGIN</button>
+        
+        <div id="adminSection" class="admin-section">
+            <h3>👑 Admin Panel</h3>
+            <button onclick="logoutAdmin()" style="background: #f44336;">Logout</button>
+            
+            <h4>📦 Current Stock</h4>
+            <div id="adminStock"></div>
+            
+            <h4>➕ Add Stock</h4>
+            <select id="addSize">
+                <option value="1.5">Small (1.5kg)</option>
+                <option value="2.0">Medium (2.0kg)</option>
+                <option value="2.5">Large (2.5kg)</option>
+            </select>
+            <input type="number" id="addQty" placeholder="Quantity">
+            <button onclick="addStock()" style="background: #4caf50;">Add Stock</button>
+            
+            <h4>✏️ Adjust Stock</h4>
+            <select id="adjustSize">
+                <option value="1.5">Small (1.5kg)</option>
+                <option value="2.0">Medium (2.0kg)</option>
+                <option value="2.5">Large (2.5kg)</option>
+            </select>
+            <div style="display: flex; gap: 5px;">
+                <button onclick="adjustStock(-1)" style="background: #ff9800;">-1</button>
+                <button onclick="adjustStock(-5)" style="background: #ff9800;">-5</button>
+                <button onclick="adjustStock(1)" style="background: #4caf50;">+1</button>
+                <button onclick="adjustStock(5)" style="background: #4caf50;">+5</button>
+            </div>
+            
+            <h4>📋 Recent Orders</h4>
+            <div id="ordersList"></div>
+        </div>
+    </div>
+    
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h3>Admin Login</h3>
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="verifyAdmin()">Login</button>
+            <button onclick="closeModal()" style="background: #f44336;">Cancel</button>
+            <p style="margin-top: 10px;">Password: admin123</p>
+        </div>
+    </div>
+
+    <script>
+        // ============ NO FIREBASE! ALL DATA STORED LOCALLY ============
+        
+        // Initialize stock data
+        let stock = {
+            '1.5': { quantity: 50, price: 45 },
+            '2.0': { quantity: 35, price: 45 },
+            '2.5': { quantity: 20, price: 45 }
         };
         
-        let currentStep = statuses.indexOf(order.status || 'pending');
-        let stepsHtml = '';
+        let orders = [];
+        let currentPayment = 'momo';
         
-        statuses.forEach((status, index) => {
-          let stepClass = '';
-          let icon = '';
-          
-          if (index < currentStep) {
-            stepClass = 'step-completed';
-            icon = '✅';
-          } else if (index === currentStep) {
-            stepClass = 'step-active';
-            icon = '⏳';
-          } else {
-            stepClass = '';
-            icon = '⭕';
-          }
-          
-          stepsHtml += `<div class="tracking-step ${stepClass}">
-                          <div class="step-icon">${icon}</div>
-                          <div class="step-content">
-                            <strong>${statusNames[status]}</strong><br>
-                            ${order.statusHistory && order.statusHistory[index] ? 
-                              new Date(order.statusHistory[index].timestamp).toLocaleString() : ''}
-                          </div>
+        // Load saved data
+        function loadData() {
+            const savedStock = localStorage.getItem('lusungulo_stock');
+            if (savedStock) {
+                stock = JSON.parse(savedStock);
+            }
+            
+            const savedOrders = localStorage.getItem('lusungulo_orders');
+            if (savedOrders) {
+                orders = JSON.parse(savedOrders);
+            }
+            
+            updateStockDisplay();
+        }
+        
+        // Save data
+        function saveData() {
+            localStorage.setItem('lusungulo_stock', JSON.stringify(stock));
+            localStorage.setItem('lusungulo_orders', JSON.stringify(orders));
+        }
+        
+        // Update stock display
+        function updateStockDisplay() {
+            let total = 0;
+            total += stock['1.5'].quantity;
+            total += stock['2.0'].quantity;
+            total += stock['2.5'].quantity;
+            
+            document.getElementById('stockDisplay').innerHTML = `🐔 Available Birds: ${total}`;
+            
+            // Admin stock view
+            if (document.getElementById('adminSection').style.display === 'block') {
+                let html = '';
+                html += `<div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ddd;">
+                            <span><strong>1.5kg</strong> (E${stock['1.5'].price}/kg)</span>
+                            <span style="font-size: 20px;">${stock['1.5'].quantity}</span>
                         </div>`;
-        });
-        
-        html += `<div class="order-card">
-                    <h4>📦 #${order.trackingNumber || orderId.slice(-6)}</h4>
-                    <p><strong>Date:</strong> ${new Date(order.timestamp).toLocaleDateString()}</p>
-                    <p><strong>Items:</strong> ${order.qty}x ${order.size}kg</p>
-                    <p><strong>Total:</strong> E${order.total}</p>
-                    <p><strong>Status:</strong> <span class="status-${order.status || 'pending'}">${statusNames[order.status || 'pending']}</span></p>
-                    <div style="margin-top:15px;">${stepsHtml}</div>`;
-        
-        if (order.status === 'delivered' && !order.confirmed) {
-          html += `<button onclick="showConfirmDelivery('${orderId}', ${JSON.stringify(order).replace(/"/g, '&quot;')})" class="btn-success">✅ Confirm Delivery</button>`;
+                html += `<div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ddd;">
+                            <span><strong>2.0kg</strong> (E${stock['2.0'].price}/kg)</span>
+                            <span style="font-size: 20px;">${stock['2.0'].quantity}</span>
+                        </div>`;
+                html += `<div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #ddd;">
+                            <span><strong>2.5kg</strong> (E${stock['2.5'].price}/kg)</span>
+                            <span style="font-size: 20px;">${stock['2.5'].quantity}</span>
+                        </div>`;
+                document.getElementById('adminStock').innerHTML = html;
+            }
+            
+            updatePrice();
         }
         
-        if (order.status === 'delivered' && !order.rating) {
-          html += `<button onclick="openRatingModal('${orderId}')" class="btn-warning" style="margin-top:10px;">⭐ Rate</button>`;
+        // Update price
+        function updatePrice() {
+            const size = document.getElementById('size').value;
+            const qty = parseInt(document.getElementById('quantity').value) || 1;
+            
+            if (!size || !stock[size]) {
+                document.getElementById('totalPrice').innerHTML = 'Total: E0.00';
+                return;
+            }
+            
+            const total = parseFloat(size) * stock[size].price * qty;
+            document.getElementById('totalPrice').innerHTML = `Total: E${total.toFixed(2)}`;
         }
         
-        if (order.rating) {
-          html += `<p style="margin-top:10px;"><strong>Rating:</strong> <span class="rating-display">${'★'.repeat(order.rating)}${'☆'.repeat(5-order.rating)}</span></p>
-                    <p><strong>Review:</strong> ${order.review || ''}</p>`;
+        // Place order
+        function placeOrder() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const size = document.getElementById('size').value;
+            const qty = parseInt(document.getElementById('quantity').value);
+            
+            if (!name || !phone || !address || !size) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            if (!stock[size] || stock[size].quantity < qty) {
+                alert(`Only ${stock[size]?.quantity || 0} birds available`);
+                return;
+            }
+            
+            const total = parseFloat(size) * stock[size].price * qty;
+            const tracking = 'LS' + Date.now().toString().slice(-8);
+            
+            // Update stock
+            stock[size].quantity -= qty;
+            
+            // Save order
+            const order = {
+                name, phone, address,
+                size, qty,
+                total: total.toFixed(2),
+                tracking,
+                status: 'pending',
+                timestamp: new Date().toLocaleString()
+            };
+            
+            orders.unshift(order);
+            saveData();
+            updateStockDisplay();
+            
+            alert(`✅ Order placed! Tracking: ${tracking}`);
+            
+            // Clear form
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('quantity').value = '1';
+            document.getElementById('size').value = '';
+            updatePrice();
+            
+            // Update orders list if admin is logged in
+            if (document.getElementById('adminSection').style.display === 'block') {
+                displayOrders();
+            }
         }
         
-        html += `</div>`;
-      });
-    }
-    
-    document.getElementById('trackingResult').innerHTML = html;
-  });
-}
-
-// ============================================
-// ⭐ RATING SYSTEM
-// ============================================
-function loadOrdersForRating() {
-  const phone = document.getElementById('ratePhone').value;
-  if (!phone) {
-    Swal.fire('Error', 'Enter your phone number', 'error');
-    return;
-  }
-  
-  db.ref("orders").orderByChild("phone").equalTo(phone).once("value", snap => {
-    let html = '';
-    
-    snap.forEach(orderSnap => {
-      const order = orderSnap.val();
-      const orderId = orderSnap.key;
-      
-      html += `<div class="order-card">
-                  <h4>📦 #${order.trackingNumber || orderId.slice(-6)}</h4>
-                  <p>${order.qty}x ${order.size}kg - ${new Date(order.timestamp).toLocaleDateString()}</p>`;
-      
-      if (order.status === 'delivered') {
-        if (order.rating) {
-          html += `<p><strong>Your Rating:</strong> <span class="rating-display">${'★'.repeat(order.rating)}${'☆'.repeat(5-order.rating)}</span></p>
-                    <p><strong>Review:</strong> ${order.review || ''}</p>`;
-        } else {
-          html += `<button onclick="openRatingModal('${orderId}')" class="btn-warning">⭐ Rate This Order</button>`;
+        // Admin functions
+        function showAdminLogin() {
+            document.getElementById('loginModal').style.display = 'flex';
         }
-      }
-      
-      html += `</div>`;
-    });
-    
-    document.getElementById('ordersForRating').innerHTML = html || '<p>No delivered orders</p>';
-  });
-}
-
-function openRatingModal(orderId) {
-  document.getElementById('ratingModal').style.display = 'flex';
-  window.currentRatingOrderId = orderId;
-}
-
-function closeRatingModal() {
-  document.getElementById('ratingModal').style.display = 'none';
-  document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = false);
-  document.getElementById('reviewComment').value = '';
-}
-
-function submitRating() {
-  const rating = document.querySelector('input[name="rating"]:checked')?.value;
-  const comment = document.getElementById('reviewComment').value;
-  const orderId = window.currentRatingOrderId;
-  
-  if (!rating) {
-    Swal.fire('Error', 'Select a rating', 'error');
-    return;
-  }
-  
-  db.ref("orders/" + orderId).update({
-    rating: parseInt(rating),
-    review: comment,
-    ratedAt: new Date().toISOString()
-  }).then(() => {
-    Swal.fire('Thank You!', 'Review submitted', 'success');
-    closeRatingModal();
-    loadOrdersForRating();
-    loadPublicReviews('all');
-  });
-}
-
-function showConfirmDelivery(orderId, order) {
-  document.getElementById('confirmModal').style.display = 'flex';
-  document.getElementById('confirmOrderDetails').innerHTML = `
-    <p><strong>#${order.trackingNumber || orderId.slice(-6)}</strong></p>
-    <p>${order.qty}x ${order.size}kg</p>
-    <p>Total: E${order.total}</p>
-  `;
-  window.currentConfirmOrderId = orderId;
-}
-
-function confirmDelivery() {
-  const orderId = window.currentConfirmOrderId;
-  
-  db.ref("orders/" + orderId).update({
-    status: 'delivered',
-    confirmed: true,
-    confirmedAt: new Date().toISOString()
-  }).then(() => {
-    Swal.fire('Confirmed!', 'Thank you!', 'success');
-    closeConfirmModal();
-    trackOrder();
-  });
-}
-
-function closeConfirmModal() {
-  document.getElementById('confirmModal').style.display = 'none';
-}
-
-function loadPublicReviews(filter = 'all') {
-  db.ref("orders").orderByChild("rating").startAt(1).once("value", snap => {
-    let reviews = [];
-    
-    snap.forEach(s => {
-      const order = s.val();
-      if (order.rating && order.review) {
-        reviews.push({
-          name: order.name.split(' ')[0],
-          rating: order.rating,
-          review: order.review,
-          date: order.ratedAt || order.timestamp
-        });
-      }
-    });
-    
-    if (filter === 'high') reviews = reviews.filter(r => r.rating >= 4);
-    if (filter === 'low') reviews = reviews.filter(r => r.rating <= 3);
-    reviews.sort((a, b) => b.date.localeCompare(a.date));
-    
-    let html = '<h4>⭐ Customer Reviews</h4>';
-    
-    if (reviews.length === 0) {
-      html += '<p style="text-align:center;">No reviews yet</p>';
-    } else {
-      reviews.forEach(r => {
-        html += `<div class="customer-review-card">
-                    <div style="display:flex; justify-content:space-between;">
-                      <h4 style="margin:0;">👤 ${r.name}</h4>
-                      <span class="rating-display">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
-                    </div>
-                    <p style="margin-top:10px;"><em>"${r.review}"</em></p>
-                    <p><small>${new Date(r.date).toLocaleDateString()}</small></p>
-                  </div>`;
-      });
-    }
-    
-    document.getElementById('publicReviewsList').innerHTML = html;
-  });
-}
-
-// ============================================
-// 📊 ADMIN STATS & ORDERS
-// ============================================
-function loadCustomerStats() {
-  db.ref("customers").once("value", snap => {
-    let total = 0, orders = 0, revenue = 0;
-    
-    snap.forEach(c => {
-      const cust = c.val();
-      total++;
-      orders += cust.orders || 0;
-      revenue += parseFloat(cust.totalSpent || 0);
-    });
-    
-    document.getElementById('customerStats').innerHTML = `
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-        <div style="background:white; padding:15px; border-radius:10px; text-align:center;">
-          <h3 style="margin:0; color:#2196f3;">${total}</h3>
-          <small>Customers</small>
-        </div>
-        <div style="background:white; padding:15px; border-radius:10px; text-align:center;">
-          <h3 style="margin:0; color:#4caf50;">${orders}</h3>
-          <small>Orders</small>
-        </div>
-        <div style="background:white; padding:15px; border-radius:10px; text-align:center; grid-column:span 2;">
-          <h3 style="margin:0; color:#ff9800;">E${revenue.toFixed(2)}</h3>
-          <small>Revenue</small>
-        </div>
-      </div>
-    `;
-  });
-}
-
-function loadAllOrders() {
-  db.ref("orders").orderByChild("timestamp").on("value", snap => {
-    let html = '';
-    let count = 0;
-    const orders = [];
-    
-    snap.forEach(s => orders.push({ key: s.key, ...s.val() }));
-    orders.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-    
-    orders.forEach(order => {
-      count++;
-      const statusColors = { pending: '#ff9800', processing: '#2196f3', ready: '#4caf50', delivered: '#9c27b0' };
-      
-      html += `<div style="border-left:5px solid ${statusColors[order.status || 'pending']}; padding:15px; margin-bottom:15px; background:white; border-radius:10px;">
-                  <div style="display:flex; justify-content:space-between;">
-                    <h4 style="margin:0;">#${order.trackingNumber || order.key.slice(-6)}</h4>
-                    <span style="background:${statusColors[order.status || 'pending']}; color:white; padding:5px 10px; border-radius:20px;">${(order.status || 'pending').toUpperCase()}</span>
-                  </div>
-                  <p><strong>👤 ${order.name}</strong> - 📞 ${order.phone}</p>
-                  <p>📦 ${order.qty}x ${order.size}kg - E${order.total}</p>
-                  <p>📍 ${order.address}</p>
-                  <p>💳 ${order.paymentMethod} ${order.momoName ? `- ${order.momoName}` : ''}</p>
-                  <div style="display:flex; gap:5px; margin-top:10px;">
-                    <button onclick="updateOrderStatus('${order.key}', 'processing')" class="btn-info" style="flex:1; padding:8px;">⚙️ Process</button>
-                    <button onclick="updateOrderStatus('${order.key}', 'ready')" class="btn-success" style="flex:1; padding:8px;">✅ Ready</button>
-                    <button onclick="updateOrderStatus('${order.key}', 'delivered')" class="btn-warning" style="flex:1; padding:8px;">🚚 Deliver</button>
-                    <button onclick="deleteOrder('${order.key}')" class="btn-danger" style="flex:1; padding:8px;">🗑️ Delete</button>
-                  </div>
-                </div>`;
-    });
-    
-    document.getElementById('ordersList').innerHTML = `<p><strong>Total Orders: ${count}</strong></p>` + html;
-  });
-}
-
-function updateOrderStatus(orderId, status) {
-  db.ref("orders/" + orderId).update({ 
-    status,
-    lastUpdated: new Date().toISOString()
-  }).then(() => {
-    Swal.fire('Updated', `Status: ${status}`, 'success');
-  });
-}
-
-function deleteOrder(orderId) {
-  Swal.fire({
-    title: 'Delete Order?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#f44336',
-    confirmButtonText: 'Delete'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      db.ref("orders/" + orderId).remove().then(() => {
-        Swal.fire('Deleted!', 'Order removed', 'success');
-      });
-    }
-  });
-}
-
-function showAddStockModal() {
-  document.getElementById('addStockModal').style.display = 'flex';
-}
-
-function closeModal() {
-  document.getElementById('addStockModal').style.display = 'none';
-  document.getElementById('stockQuantity').value = '';
-}
-
-function showAdjustStockModal() {
-  document.getElementById('adjustStockModal').style.display = 'flex';
-}
-
-function closeAdjustModal() {
-  document.getElementById('adjustStockModal').style.display = 'none';
-  document.getElementById('customAdjust').value = '';
-}
-
-function showSetPriceModal(size, currentPrice) {
-  Swal.fire({
-    title: `Set price for ${size}kg`,
-    input: 'number',
-    inputValue: currentPrice,
-    confirmButtonText: 'Save',
-    showCancelButton: true,
-    preConfirm: (price) => {
-      return db.ref("stock/" + size).update({ 
-        pricePerKg: parseFloat(price),
-        lastUpdated: new Date().toISOString()
-      }).then(() => {
-        Swal.fire('Success', 'Price updated', 'success');
-      });
-    }
-  });
-}
-
-function switchTab(tab) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-  
-  if (tab === 'customer') {
-    document.getElementById('customerTab').classList.add('active');
-    document.querySelectorAll('.tab')[0].classList.add('active');
-  } else if (tab === 'track') {
-    document.getElementById('trackTab').classList.add('active');
-    document.querySelectorAll('.tab')[1].classList.add('active');
-  } else if (tab === 'rate') {
-    document.getElementById('rateTab').classList.add('active');
-    document.querySelectorAll('.tab')[2].classList.add('active');
-  } else if (tab === 'reviews') {
-    document.getElementById('reviewsTab').classList.add('active');
-    document.querySelectorAll('.tab')[3].classList.add('active');
-    loadPublicReviews('all');
-  } else if (tab === 'scan') {
-    document.getElementById('scanTab').classList.add('active');
-    document.querySelectorAll('.tab')[4].classList.add('active');
-  }
-}
-
-// ============================================
-// 📊 EXPORT FUNCTIONS
-// ============================================
-function exportOrders() {
-  db.ref("orders").once("value", snap => {
-    const orders = [];
-    snap.forEach(s => orders.push({ id: s.key, ...s.val() }));
-    
-    let csv = "Order ID,Date,Tracking#,Name,Phone,Size,Qty,Type,Payment,Total,Status,Address\n";
-    orders.forEach(o => {
-      csv += `${o.id},${o.timestamp},${o.trackingNumber},${o.name},${o.phone},${o.size},${o.qty},${o.type},${o.paymentMethod},${o.total},${o.status},${o.address}\n`;
-    });
-    
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'lusungulo_orders.csv';
-    a.click();
-  });
-}
-
-function exportCustomers() {
-  db.ref("customers").once("value", snap => {
-    const customers = [];
-    snap.forEach(s => customers.push({ id: s.key, ...s.val() }));
-    
-    let csv = "Phone,Name,ID,Address,Orders,Total Spent,First Order,Last Order\n";
-    customers.forEach(c => {
-      csv += `${c.phone},${c.name},${c.idNumber},${c.address},${c.orders},${c.totalSpent},${c.firstOrder},${c.lastOrder}\n`;
-    });
-    
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'lusungulo_customers.csv';
-    a.click();
-  });
-}
-
-// ============================================
-// 🚀 INITIALIZATION
-// ============================================
-window.onload = function() {
-  console.log("🚀 Starting Lusungulo Fresh Broilers...");
-  
-  // Initialize stock listener (customer view)
-  initializeStockListener();
-  
-  // Set default values
-  updatePrice();
-  selectPayment('momo');
-  
-  // Set default dates
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('payDate').value = today;
-  document.getElementById('payTime').value = '12:00';
-  
-  // Generate customer QR code
-  generateCustomerQR(BUSINESS_WHATSAPP);
-  
-  console.log("✅ App ready!");
-  
-  // Check Firebase connection
-  setTimeout(() => {
-    console.log("🔍 Checking Firebase status...");
-    db.ref("stock").once("value")
-      .then(() => console.log("✅ Firebase read successful"))
-      .catch(err => console.error("❌ Firebase read failed:", err));
-  }, 2000);
-};
-</script>
+        
+        function closeModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        
+        function verifyAdmin() {
+            const password = document.getElementById('password').value;
+            if (password === 'admin123') {
+                closeModal();
+                document.getElementById('adminSection').style.display = 'block';
+                updateStockDisplay();
+                displayOrders();
+            } else {
+                alert('Wrong password');
+            }
+        }
+        
+        function logoutAdmin() {
+            document.getElementById('adminSection').style.display = 'none';
+        }
+        
+        function addStock() {
+            const size = document.getElementById('addSize').value;
+            const qty = parseInt(document.getElementById('addQty').value);
+            
+            if (!qty || qty < 1) {
+                alert('Enter valid quantity');
+                return;
+            }
+            
+            stock[size].quantity += qty;
+            saveData();
+            updateStockDisplay();
+            alert(`✅ Added ${qty} birds to ${size}kg`);
+            document.getElementById('addQty').value = '';
+        }
+        
+        function adjustStock(change) {
+            const size = document.getElementById('adjustSize').value;
+            const newQty = Math.max(0, stock[size].quantity + change);
+            stock[size].quantity = newQty;
+            saveData();
+            updateStockDisplay();
+            alert(`✅ Stock updated to ${newQty}`);
+        }
+        
+        function displayOrders() {
+            let html = '';
+            const recentOrders = orders.slice(0, 5);
+            
+            recentOrders.forEach(order => {
+                html += `<div style="background: white; padding: 10px; margin: 10px 0; border-radius: 5px; border-left: 5px solid #ff9800;">
+                            <strong>#${order.tracking}</strong> - ${order.name}<br>
+                            ${order.qty}x ${order.size}kg - E${order.total}<br>
+                            Status: ${order.status}<br>
+                            <small>${order.timestamp}</small>
+                        </div>`;
+            });
+            
+            document.getElementById('ordersList').innerHTML = html || 'No orders yet';
+        }
+        
+        // Event listeners
+        document.getElementById('size').addEventListener('change', updatePrice);
+        document.getElementById('quantity').addEventListener('input', updatePrice);
+        
+        // Initialize
+        loadData();
+        console.log('✅ App ready! No Firebase needed!');
+    </script>
 </body>
 </html>
