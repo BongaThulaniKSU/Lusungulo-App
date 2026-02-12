@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lusungulo - Scan to Order</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .qr-card {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2e7d32;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .qr-box {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+        }
+        img {
+            width: 300px;
+            height: 300px;
+            max-width: 100%;
+        }
+        .scan-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin: 20px 0 10px;
+        }
+        .instructions {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .url-box {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #666;
+            word-break: break-all;
+            border: 1px dashed #999;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 14px;
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .qr-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-card">
+        <h1>🐔 LUSUNGULO</h1>
+        <div class="subtitle">Fresh Broilers • Order & Track</div>
+        
+        <!-- QR CODE - CUSTOMERS SCAN THIS WITH THEIR PHONE -->
+        <div class="qr-box">
+            <img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://lusungulo-3a422.web.app&choe=UTF-8" 
+                 alt="Scan to open Lusungulo App">
+        </div>
+        
+        <div class="scan-text">📱 SCAN TO ORDER</div>
+        <div class="instructions">
+            Use your phone camera to scan<br>
+            Instant access - No typing needed!
+        </div>
+        
+        <div class="url-box">
+            🔗 https://lusungulo-3a422.web.app
+        </div>
+        
+        <div class="footer">
+            Lusungulo Fresh Broilers © 2026
+        </div>
+    </div>
+
+    <script>
+        // Auto-update QR code with your actual URL
+        const APP_URL = "https://lusungulo-3a422.web.app";
+        const qrImg = document.querySelector('img');
+        qrImg.src = `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${encodeURIComponent(APP_URL)}&choe=UTF-8`;
+    </script>
+</body>
+</html>
